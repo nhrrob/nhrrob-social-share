@@ -4,7 +4,7 @@ Tags: social share, linkedin, open graph, share buttons, privacy
 Requires at least: 6.6
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 0.1.0
+Stable tag: 0.1.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -48,6 +48,9 @@ Yes. On "Automatic" the link preview tags are left to them. The share buttons an
 Its settings, the LinkedIn connection and the share texts and history it kept with each post. The drawn cards stay in the uploads folder, under nhrrob-social-share.
 
 == Changelog ==
+
+= 0.1.1 =
+* Runs on PHP 8.6 without a deprecation notice: the REST class no longer has a constant named "namespace".
 
 = 0.1.0 =
 * First version, from the code that ran nazmulrobin.com/blog's sharing: share buttons, link previews with a drawn card, LinkedIn sharing from your own app, X, Facebook, Reddit and Medium by hand, Reddit targets, three rotating layouts with their results, and a Social Share panel in the post editor.

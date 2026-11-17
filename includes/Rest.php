@@ -23,7 +23,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class Rest {
 
-	const NAMESPACE = 'nhrrob-social-share/v1';
+	const REST_NAMESPACE = 'nhrrob-social-share/v1';
 
 	/**
 	 * Register hooks.
@@ -41,7 +41,7 @@ class Rest {
 	 */
 	public function routes() {
 		register_rest_route(
-			self::NAMESPACE,
+			self::REST_NAMESPACE,
 			'/settings',
 			[
 				[
@@ -58,7 +58,7 @@ class Rest {
 		);
 
 		register_rest_route(
-			self::NAMESPACE,
+			self::REST_NAMESPACE,
 			'/results',
 			[
 				'methods'             => 'GET',
