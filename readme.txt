@@ -1,0 +1,55 @@
+=== NHR Social Share ===
+Contributors: nhrrob
+Tags: social share, linkedin, open graph, share buttons, privacy
+Requires at least: 6.6
+Tested up to: 7.1
+Requires PHP: 7.4
+Stable tag: 0.1.0
+License: GPLv2 or later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
+
+Share each post where its readers are: share buttons, link previews with a drawn card, LinkedIn from your own app, and X, Facebook, Reddit and Medium filled in by hand.
+
+== Description ==
+NHR Social Share helps you share your posts and helps readers share them, without a service in between and without tracking anyone.
+
+### For readers
+- **Share buttons** under each post: LinkedIn, X, Reddit, Facebook, WhatsApp, Email and Copy link, in the order you choose. They are plain links to each network's own share page: no script, cookie or counter from any network.
+- **Link previews**: Open Graph and X card tags, so a shared link shows the title, the excerpt and a picture. A post without a featured image gets a card drawn from its title, in your colours. Next to an SEO plugin that prints its own tags, it steps aside.
+
+### For you
+- **LinkedIn**: connect your own LinkedIn app and share each post to your profile, automatically when it is first published or from the Posts list. The keys and the token stay on your site.
+- **Share by hand** where an API costs money or is not allowed: X, Facebook, Reddit and Medium open from the Posts list with the post filled in. What a page cannot take in its address (Facebook's text, Medium's link) is copied for you to paste. Used links say "again", and the post's "Shared on" box keeps where it was posted.
+- **Reddit targets**: default subreddits and your own profile (u/name) for every post, or a post's own list.
+- **Three layouts take turns** on LinkedIn, X and Facebook (link card; picture with the link in the text; picture with the link in the first comment or a reply), and **Results** shows which one brings readers back, with the visits counted by NHR Post Insights.
+- **A Social Share panel** in the post editor for the post's LinkedIn and Facebook text, its X text with a 280-character count, its Reddit targets and its LinkedIn layout.
+
+Settings → Social Share has a screen for each, in a light and a dark theme.
+
+== External services ==
+The plugin connects to LinkedIn only when you connect it and when a post is shared there:
+
+* **LinkedIn** (www.linkedin.com and api.linkedin.com): to authorize the connection with your own LinkedIn app, read your member id and name, upload the post's picture and post the share and its first comment. Sent: your app's Client ID and Secret during the connection, then the post's text, link, title, excerpt and picture. LinkedIn's terms: https://www.linkedin.com/legal/user-agreement and privacy policy: https://www.linkedin.com/legal/privacy-policy
+
+The share buttons and the share-by-hand links are ordinary links that open the network's page in the browser; the plugin itself sends nothing to X, Facebook, Reddit, Medium, WhatsApp or anyone else.
+
+== Frequently Asked Questions ==
+
+= Why are X and Facebook not posted automatically like LinkedIn? =
+X charges for every post made through its API, and Facebook lets no app post to a personal profile. The plugin opens their page with the post filled in, and you press Post.
+
+= Why does the X text have to be short? =
+Without X Premium a post can have at most 280 characters. A link counts as 23.
+
+= Does it work with Yoast SEO, Rank Math and the like? =
+Yes. On "Automatic" the link preview tags are left to them. The share buttons and the sharing work the same.
+
+= What is removed when I delete the plugin? =
+Its settings, the LinkedIn connection and the share texts and history it kept with each post. The drawn cards stay in the uploads folder, under nhrrob-social-share.
+
+== Changelog ==
+
+= 0.1.0 =
+* First version, from the code that ran nazmulrobin.com/blog's sharing: share buttons, link previews with a drawn card, LinkedIn sharing from your own app, X, Facebook, Reddit and Medium by hand, Reddit targets, three rotating layouts with their results, and a Social Share panel in the post editor.
+* Settings → Social Share, in a light and a dark theme.
+* A site that ran that code keeps its LinkedIn connection and every post's share history: they are copied once on activation.
