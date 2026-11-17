@@ -73,23 +73,35 @@ class Share {
 
 		update_post_meta( $post_id, Keys::LINKEDIN_SHARE, $shared );
 
+		/** This action is documented in includes/Hand/RowActions.php */
+		do_action( 'nhrrob_social_share_shared', $post_id, 'linkedin' );
+
 		return is_wp_error( $comment ) ? $comment : true;
 	}
 
 	/**
 	 * The share's text: the post's LinkedIn text, or its title and excerpt.
+	 * Facebook, shared by hand, uses the same text.
 	 *
-	 * @param \WP_Post $post Post.
+	 * @param \WP_Post $post    Post.
+	 * @param string   $network `linkedin` or `facebook`.
 	 * @return string
 	 */
-	public static function text( $post ) {
+	public static function text( $post, $network = 'linkedin' ) {
 		$text = get_post_meta( $post->ID, Keys::LINKEDIN_TEXT, true );
 
 		if ( '' === $text ) {
 			$text = html_entity_decode( get_the_title( $post ), ENT_QUOTES, 'UTF-8' ) . "\n\n" . html_entity_decode( wp_strip_all_tags( get_the_excerpt( $post ) ), ENT_QUOTES, 'UTF-8' );
 		}
 
-		return trim( $text );
+		/**
+		 * A share's text, before the layout adds the link or a line pointing to it.
+		 *
+		 * @param string   $text    The text.
+		 * @param \WP_Post $post    The post.
+		 * @param string   $network `linkedin`, `facebook` or `x`.
+		 */
+		return trim( (string) apply_filters( 'nhrrob_social_share_text', trim( $text ), $post, $network ) );
 	}
 
 	/**

@@ -53,14 +53,18 @@ export default function Results() {
 				<Panel
 					key={ network.key }
 					title={ network.name }
-					icon={ network.key === 'linkedin' ? 'linkedin' : 'share' }
+					icon={
+						network.icon ||
+						( network.key === 'linkedin' ? 'linkedin' : 'share' )
+					}
 					flush
 				>
 					<table className={ P + 'grid' }>
 						<thead>
 							<tr>
 								<th>
-									{ __( 'Layout', 'nhrrob-social-share' ) }
+									{ network.column ||
+										__( 'Layout', 'nhrrob-social-share' ) }
 								</th>
 								<th className="is-number">
 									{ __( 'Shares', 'nhrrob-social-share' ) }

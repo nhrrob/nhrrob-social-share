@@ -148,13 +148,24 @@ class Rest {
 			];
 		}
 
-		return rest_ensure_response(
+		/**
+		 * The Results screen's tables. An add-on adds its own to `networks`,
+		 * each as [ key, name, rows ] with optional `column` (the first
+		 * column's heading) and `icon`; rows as [ layout, label, shares,
+		 * visits, counting ].
+		 *
+		 * @param array $results [ available, days, networks ].
+		 */
+		$results = apply_filters(
+			'nhrrob_social_share_results',
 			[
 				'available' => Visits::available(),
 				'days'      => Visits::DAYS,
 				'networks'  => $networks,
 			]
 		);
+
+		return rest_ensure_response( $results );
 	}
 
 	/**

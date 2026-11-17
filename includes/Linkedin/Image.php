@@ -19,25 +19,40 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Image {
 
 	/**
-	 * Which picture a share of the post carries: its featured image, or the card drawn from its title.
+	 * Which picture the post's shares and link preview carry: its featured
+	 * image, or the card drawn from its title. A post without a featured
+	 * image always gets the card.
 	 *
 	 * @param \WP_Post $post Post.
 	 * @return string `featured` or `card`.
 	 */
 	public static function source( $post ) {
-		return has_post_thumbnail( $post ) ? 'featured' : 'card';
+		if ( ! has_post_thumbnail( $post ) ) {
+			return 'card';
+		}
+
+		/**
+		 * The picture of a post that has a featured image: `featured` (the
+		 * default) or `card`, the card drawn from its title.
+		 *
+		 * @param string   $source `featured` or `card`.
+		 * @param \WP_Post $post   The post.
+		 */
+		return 'card' === apply_filters( 'nhrrob_social_share_picture', 'featured', $post ) ? 'card' : 'featured';
 	}
 
 	/**
-	 * Address of the post's picture.
+	 * Address of the post's picture. The featured image stands in when the
+	 * card cannot be drawn.
 	 *
 	 * @param \WP_Post $post Post.
 	 * @return string Empty when there is none.
 	 */
 	public static function url( $post ) {
-		$url = get_the_post_thumbnail_url( $post, 'large' );
+		$featured = get_the_post_thumbnail_url( $post, 'large' );
+		$card     = $featured && 'featured' === self::source( $post ) ? '' : (string) Card::url( $post );
 
-		return $url ? $url : (string) Card::url( $post );
+		return $card ? $card : (string) $featured;
 	}
 
 	/**
