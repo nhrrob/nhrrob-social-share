@@ -64,7 +64,12 @@ between. It grew out of the blog's own needs (nazmulrobin.com/blog, 1.10.0 to
   plugins (`@wordpress/scripts` only, light and dark): Share buttons, Link
   previews, LinkedIn, Share by hand, Results (`.ai/DESIGN.md`).
 
-## Pro, version 0.1 (to confirm in the R&D issue; the first two are in the free 0.1 until the add-on exists)
+## Pro, version 0.1 (the first two are in the free 0.1 until the add-on is built)
+
+The Pro plan lives in
+[nhrrob/nhrrob-social-share-pro](https://github.com/nhrrob/nhrrob-social-share-pro)
+(`docs/PRD.md`, `docs/DECISIONS.md`, `docs/TODO.md`); this list is the short
+version.
 
 - **Layouts that take turns** on LinkedIn, X and Facebook: A link card, B
   picture with the link in the text, C picture with the link in the first
@@ -122,6 +127,7 @@ plugin by tag with Composer, like Post Insights.
 |---|---|---|
 | 2026-11-17 | Sharing leaves the blog's site plugin for its own plugin, free plus a Pro add-on | It is stable, about 2,500 lines, and built from real use, so it can be a product (nhrrob/nazmulrobin_blog#139). |
 | 2026-11-17 | Market check (`docs/market.md`, #1): the rotating layouts with visits per layout, and the pictures tried the same way, stay the Pro candidates; "share again later" leaves the Pro list; Bluesky is the first network to post to by API | No plugin found that tests share formats against site visits, while re-sharing is free in Jetpack Social. Prices of others: $27–39 per site per year for buttons, $58–199 for auto-posters. |
-| 2026-11-17 | The rotating layouts and Results ship in the free 0.1 | The blog uses them every day and the Pro add-on does not exist yet; they move to Pro only if #1 finds nobody gives them free (#10). |
+| 2026-11-17 | The rotating layouts and Results ship in the free 0.1 | The blog uses them every day and the Pro add-on does not exist yet; they move to Pro only if #1 finds nobody gives them free (#10, now nhrrob/nhrrob-social-share-pro#1). |
 | 2026-11-17 | Automatic LinkedIn shares only on a `production` environment | A staging or local copy holds the live site's token and must never post. The blog keeps its own staging check through the filter. |
 | 2026-11-17 | Facebook and X by hand, not by API | Facebook lets no app post to a personal profile; X charges per post and the author has no Premium, so X texts stay under 280 characters (blog #134, #135). |
+| 2026-11-17 | The Pro add-on's plan moves to its own repo, nhrrob/nhrrob-social-share-pro, with #10 | The Pro work gets one place to continue from, as for Post Insights Pro. When the layouts leave the free plugin is decided there. |

@@ -7,8 +7,10 @@ Private repository, version 0.1. The code came out of the blog's site plugin
 (nhrrob/nazmulrobin_blog), which now requires this plugin by its release tags
 with Composer, so a release here reaches the live blog in its next Composer
 update. A paid add-on, `nhrrob-social-share-pro`, comes later, sold through
-the store (nhrrob/nazmulrobin_store); until then the rotating layouts and
-their results are in the free plugin (`.ai/PRD.md`, issue #10).
+the store (nhrrob/nazmulrobin_store). Its plan, decisions and to-do are in
+[nhrrob/nhrrob-social-share-pro](https://github.com/nhrrob/nhrrob-social-share-pro)
+(`docs/`); until it is built the rotating layouts and their results stay in
+the free plugin.
 
 ## Read first
 
