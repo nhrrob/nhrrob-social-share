@@ -64,19 +64,19 @@ between. It grew out of the blog's own needs (nazmulrobin.com/blog, 1.10.0 to
   plugins (`@wordpress/scripts` only, light and dark): Share buttons, Link
   previews, LinkedIn, Share by hand, Results (`.ai/DESIGN.md`).
 
-## Pro, version 0.1 (the first two are in the free 0.1 until the add-on is built)
+## Pro, version 0.1 (Results is in the free 0.1 until the add-on is built)
 
 The Pro plan lives in
 [nhrrob/nhrrob-social-share-pro](https://github.com/nhrrob/nhrrob-social-share-pro)
 (`docs/PRD.md`, `docs/DECISIONS.md`, `docs/TODO.md`); this list is the short
 version.
 
-- **Layouts that take turns** on LinkedIn, X and Facebook: A link card, B
+- ~~Layouts that take turns~~ on LinkedIn, X and Facebook: A link card, B
   picture with the link in the text, C picture with the link in the first
   comment (X: in a reply). Each post takes the one used least, or a forced
   one; the Posts list helps with each (download picture, reply with the link,
-  copy the link for the comment).
-- **Which layout brings readers:** visits from each network per layout in the
+  copy the link for the comment). **Stays free** (Robin, 2026-11-17).
+- **Which layout brings readers** (Pro or free: still open in the Pro repo): visits from each network per layout in the
   first 7 days after a share, from NHR Post Insights (free) when it is active.
 - **Pictures tried the same way:** the featured image against the drawn card
   (blog #117, second round).
@@ -131,3 +131,4 @@ plugin by tag with Composer, like Post Insights.
 | 2026-11-17 | Automatic LinkedIn shares only on a `production` environment | A staging or local copy holds the live site's token and must never post. The blog keeps its own staging check through the filter. |
 | 2026-11-17 | Facebook and X by hand, not by API | Facebook lets no app post to a personal profile; X charges per post and the author has no Premium, so X texts stay under 280 characters (blog #134, #135). |
 | 2026-11-17 | The Pro add-on's plan moves to its own repo, nhrrob/nhrrob-social-share-pro, with #10 | The Pro work gets one place to continue from, as for Post Insights Pro. When the layouts leave the free plugin is decided there. |
+| 2026-11-17 | The rotating layouts stay in the free plugin; whether Results moves to Pro is still open | Robin's decision, recorded in the Pro repo's `docs/DECISIONS.md`. |
