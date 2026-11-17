@@ -1,8 +1,8 @@
 # NHR Social Share: scope
 
-Draft of 2026-11-17 (first written in nhrrob/nazmulrobin_blog#139). The R&D
-issue settles the free and Pro lists before 0.1 is built; each change it makes
-gets a row under "Decisions".
+First written 2026-11-17 (nhrrob/nazmulrobin_blog#139). 0.1 is built and runs
+the blog. The R&D issue (#1) settles the free and Pro lists; each change it
+makes gets a row under "Decisions".
 
 Slug `nhrrob-social-share` · display name "NHR Social Share" · menu label
 **Social Share** (Settings → Social Share; never "NHR" in the UI). Free
@@ -37,7 +37,7 @@ between. It grew out of the blog's own needs (nazmulrobin.com/blog, 1.10.0 to
    updates and support. Nothing is paid that other plugins give away free
    (the rule of the Post Insights Pro PRD); the R&D issue checks each Pro item.
 
-## Free, version 0.1 (what the blog has today, made to work on any site)
+## Free, version 0.1 (built 2026-11-17: what the blog had, made to work on any site)
 
 - **Share buttons** under each post: LinkedIn, X, Facebook, Reddit, WhatsApp,
   Email, with line icons and the word; which ones and their order in the
@@ -61,10 +61,10 @@ between. It grew out of the blog's own needs (nazmulrobin.com/blog, 1.10.0 to
   targets. A site that writes posts from files (like the blog) fills the same
   post meta through a filter.
 - **Settings → Social Share**, a React app in the style of Robin's other
-  plugins (`@wordpress/scripts` only, light and dark), with the LinkedIn
-  connection on its own tab.
+  plugins (`@wordpress/scripts` only, light and dark): Share buttons, Link
+  previews, LinkedIn, Share by hand, Results (`.ai/DESIGN.md`).
 
-## Pro, version 0.1 (to confirm in the R&D issue)
+## Pro, version 0.1 (to confirm in the R&D issue; the first two are in the free 0.1 until the add-on exists)
 
 - **Layouts that take turns** on LinkedIn, X and Facebook: A link card, B
   picture with the link in the text, C picture with the link in the first
@@ -101,7 +101,7 @@ Namespace `NHRRob\SocialShare\`, class `NHRRob_Social_Share`, constants
 (meta starting with `_`), CSS and HTML id prefix `nhrrob-social-share-`, REST
 namespace `nhrrob-social-share/v1`, text domain `nhrrob-social-share`.
 
-## Moving the blog onto it
+## Moving the blog onto it (done in 0.1)
 
 The blog's code moves as listed in #139: `includes/Linkedin/`,
 `includes/AuthorShare/`, `ShareLinks`, `ShareMeta`, `ShareImage`,
@@ -109,13 +109,19 @@ The blog's code moves as listed in #139: `includes/Linkedin/`,
 the blog's option `nazmulrobin_linkedin` and the post meta
 `_nazmulrobin_linkedin_*`, `_nazmulrobin_author_share*`, `_nazmulrobin_x_text`
 and `_nazmulrobin_reddit` to its own keys, once, so the connection and every
-share's history carry over; tried on staging first. The blog's history
-constants (`Pattern::COMMENT_FROM`, `TEXT_FROM`) are set by the blog through a
-filter. The blog requires the plugin by tag with Composer, like Post Insights.
+share's history carry over. The blog's history constants
+(`Pattern::COMMENT_FROM`, `TEXT_FROM`) are set by the blog through the filter
+`nhrrob_social_share_unsaved_pattern`, its series label on the card through
+`nhrrob_social_share_card_label`, its LinkedIn redirect URL through
+`nhrrob_social_share_linkedin_redirect_uri`, and staging is kept from
+sharing through `nhrrob_social_share_auto_share`. The blog requires the
+plugin by tag with Composer, like Post Insights.
 
 ## Decisions
 
 | Date | Decision | Why |
 |---|---|---|
 | 2026-11-17 | Sharing leaves the blog's site plugin for its own plugin, free plus a Pro add-on | It is stable, about 2,500 lines, and built from real use, so it can be a product (nhrrob/nazmulrobin_blog#139). |
+| 2026-11-17 | The rotating layouts and Results ship in the free 0.1 | The blog uses them every day and the Pro add-on does not exist yet; they move to Pro only if #1 finds nobody gives them free (#10). |
+| 2026-11-17 | Automatic LinkedIn shares only on a `production` environment | A staging or local copy holds the live site's token and must never post. The blog keeps its own staging check through the filter. |
 | 2026-11-17 | Facebook and X by hand, not by API | Facebook lets no app post to a personal profile; X charges per post and the author has no Premium, so X texts stay under 280 characters (blog #134, #135). |

@@ -1,0 +1,39 @@
+name: Release
+
+# When the plugin's Version changes on main, tag v<version> and make a GitHub
+# release with that version's changelog from readme.txt. The blog installs
+# the plugin from these tags with Composer.
+on:
+  push:
+    branches: [ "main" ]
+    paths: [ "nhrrob-social-share.php", ".github/workflows/release.yml" ]
+  workflow_dispatch:
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Tag and release the version
+      env:
+        GH_TOKEN: ${{ github.token }}
+      run: |
+        version=$(sed -n 's/^ \* Version: *//p' nhrrob-social-share.php)
+
+        if [ -z "$version" ]; then
+          echo "::error::No Version found in the nhrrob-social-share.php header."
+          exit 1
+        fi
+
+        if gh release view "v$version" >/dev/null 2>&1; then
+          echo "v$version is already released."
+          exit 0
+        fi
+
+        # The notes are this version's lines under "== Changelog ==" in readme.txt.
+        awk -v version="$version" '/^= /{ found = ( $2 == version ); next } /^== /{ found = 0 } found' readme.txt > release-notes.md
+        gh release create "v$version" --target "$GITHUB_SHA" --title "v$version" --notes-file release-notes.md

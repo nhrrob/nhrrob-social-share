@@ -1,0 +1,1170 @@
+/*
+ * NHR Social Share — settings app styles.
+ * Every colour is a custom property on .nhrrob-social-share-app (see .ai/DESIGN.md),
+ * redefined for the dark theme. No framework, no icon font.
+ */
+$p: 'nhrrob-social-share';
+
+@mixin dark-tokens {
+	--ss-primary: #a5b4fc;
+	--ss-primary-600: #8b9bff;
+	--ss-grad-a: #2e2a78;
+	--ss-grad-b: #4f46c8;
+	--ss-soft: #1f2238;
+	--ss-glow: rgba(0, 0, 0, 0.45);
+	--ss-success: #3ccf8a;
+	--ss-warning: #f5a742;
+	--ss-danger: #f2685c;
+	--ss-info: #6aaef2;
+	--ss-success-bg: rgba(60, 207, 138, 0.14);
+	--ss-warning-bg: rgba(245, 167, 66, 0.14);
+	--ss-danger-bg: rgba(242, 104, 92, 0.15);
+	--ss-info-bg: rgba(106, 174, 242, 0.14);
+	--ss-surface: #161b22;
+	--ss-bg: #0d1117;
+	--ss-sunken: #10151c;
+	--ss-border: #262d36;
+	--ss-border-strong: #363e48;
+	--ss-text: #e6edf3;
+	--ss-muted: #9198a1;
+	--ss-shadow: 0 1px 3px rgba(0, 0, 0, 0.5), 0 1px 2px rgba(0, 0, 0, 0.4);
+	--ss-shadow-lg: 0 14px 38px rgba(0, 0, 0, 0.6);
+	color-scheme: dark;
+}
+
+.#{$p}-app {
+	--ss-primary: #4338ca;
+	--ss-primary-600: #4f46e5;
+	--ss-grad-a: #3730a3;
+	--ss-grad-b: #6366f1;
+	--ss-gradient: linear-gradient(135deg, var(--ss-grad-a) 0%, var(--ss-grad-b) 100%);
+	--ss-soft: #eef0ff;
+	--ss-glow: rgba(79, 70, 229, 0.25);
+	--ss-on-primary: #fff;
+	--ss-on-primary-dim: rgba(255, 255, 255, 0.18);
+	--ss-success: #12a15c;
+	--ss-warning: #c96a04;
+	--ss-danger: #d6362a;
+	--ss-info: #2a7fd6;
+	--ss-success-bg: #e8f7ef;
+	--ss-warning-bg: #fdf1e0;
+	--ss-danger-bg: #fdecea;
+	--ss-info-bg: #e8f1fc;
+	--ss-surface: #fff;
+	--ss-bg: #f6f8fa;
+	--ss-sunken: #eef1f4;
+	--ss-border: #e1e5ea;
+	--ss-border-strong: #cfd6dd;
+	--ss-text: #1f2328;
+	--ss-muted: #59636e;
+	--ss-shadow: 0 1px 3px rgba(15, 31, 36, 0.07), 0 1px 2px rgba(15, 31, 36, 0.05);
+	--ss-shadow-lg: 0 12px 32px rgba(15, 31, 36, 0.13);
+	--ss-radius: 12px;
+	--ss-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+	margin: 20px 0 0;
+	border: 1px solid var(--ss-border);
+	border-radius: var(--ss-radius);
+	overflow: hidden;
+	background: var(--ss-bg);
+	color: var(--ss-text);
+	font-size: 14px;
+	line-height: 1.5;
+	box-shadow: var(--ss-shadow);
+
+	*,
+	*::before,
+	*::after {
+		box-sizing: border-box;
+	}
+
+	&[data-theme='dark'] {
+		@include dark-tokens;
+	}
+
+	@media (prefers-color-scheme: dark) {
+		&:not([data-theme='light']) {
+			@include dark-tokens;
+		}
+	}
+
+	h1,
+	h2,
+	h3 {
+		color: inherit;
+	}
+
+	p {
+		font-size: inherit;
+		margin: 0 0 10px;
+	}
+
+	a {
+		color: var(--ss-primary-600);
+	}
+
+	code {
+		font-family: var(--ss-mono);
+		font-size: 12.5px;
+		background: var(--ss-sunken);
+		color: inherit;
+		padding: 1px 5px;
+		border-radius: 5px;
+	}
+
+	button:focus-visible,
+	a:focus-visible,
+	input:focus-visible,
+	select:focus-visible {
+		outline: 2px solid var(--ss-primary);
+		outline-offset: 2px;
+		box-shadow: none;
+	}
+}
+
+/*
+ * Dark mode covers the whole screen, not only the app. The tokens live on
+ * .nhrrob-social-share-app and never reach its ancestors, so the page canvas around
+ * it (wp-admin's light html/body background and the footer) is painted here.
+ * :has() reads the theme from the app, so the toggle needs no extra code.
+ * The admin menu and toolbar draw their own backgrounds and are unaffected.
+ * The hex values are --ss-bg and --ss-muted of the dark theme.
+ */
+html:has(.#{$p}-app[data-theme='dark']),
+html:has(.#{$p}-app[data-theme='dark']) body {
+	background: #0d1117;
+	color-scheme: dark;
+}
+
+html:has(.#{$p}-app[data-theme='dark']) #wpfooter {
+	color: #9198a1;
+}
+
+@media (prefers-color-scheme: dark) {
+	html:has(.#{$p}-app:not([data-theme='light'])),
+	html:has(.#{$p}-app:not([data-theme='light'])) body {
+		background: #0d1117;
+		color-scheme: dark;
+	}
+
+	html:has(.#{$p}-app:not([data-theme='light'])) #wpfooter {
+		color: #9198a1;
+	}
+}
+
+/* ---- App bar and nav ---- */
+.#{$p}-bar {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	padding: 14px 20px;
+	background: var(--ss-gradient);
+	color: var(--ss-on-primary);
+
+	&__mark {
+		display: grid;
+		place-items: center;
+		width: 30px;
+		height: 30px;
+		border-radius: 9px;
+		background: var(--ss-on-primary-dim);
+	}
+
+	&__title {
+		font-size: 17px;
+		font-weight: 600;
+	}
+
+	&__spacer {
+		flex: 1;
+	}
+
+	&__btn {
+		display: inline-grid;
+		place-items: center;
+		width: 32px;
+		height: 32px;
+		border: 0;
+		border-radius: 8px;
+		cursor: pointer;
+		background: var(--ss-on-primary-dim);
+		color: var(--ss-on-primary);
+
+		&:hover {
+			filter: brightness(1.15);
+		}
+	}
+}
+
+.#{$p}-body {
+	display: flex;
+	min-height: 560px;
+}
+
+.#{$p}-nav {
+	flex: 0 0 216px;
+	display: flex;
+	flex-direction: column;
+	gap: 3px;
+	padding: 14px 12px;
+	background: var(--ss-surface);
+	border-right: 1px solid var(--ss-border);
+
+	&__item {
+		display: flex;
+		align-items: center;
+		gap: 11px;
+		width: 100%;
+		padding: 9px 12px;
+		border: 0;
+		border-radius: 10px;
+		background: transparent;
+		color: var(--ss-muted);
+		font-size: 14px;
+		font-weight: 500;
+		cursor: pointer;
+		text-align: left;
+		white-space: nowrap;
+
+		&:hover {
+			background: var(--ss-soft);
+			color: var(--ss-primary-600);
+		}
+
+		&.is-active {
+			background: var(--ss-gradient);
+			color: var(--ss-on-primary);
+			box-shadow: 0 4px 12px var(--ss-glow);
+		}
+
+		&.is-last {
+			margin-top: 9px;
+			position: relative;
+
+			&::before {
+				content: '';
+				position: absolute;
+				left: 8px;
+				right: 8px;
+				top: -6px;
+				border-top: 1px solid var(--ss-border);
+			}
+		}
+	}
+}
+
+.#{$p}-app.is-collapsed {
+	.#{$p}-nav {
+		flex-basis: 60px;
+	}
+
+	.#{$p}-nav__label {
+		display: none;
+	}
+
+	.#{$p}-nav__item {
+		justify-content: center;
+		padding-left: 0;
+		padding-right: 0;
+	}
+}
+
+.#{$p}-icon {
+	flex: 0 0 auto;
+}
+
+.#{$p}-content {
+	flex: 1;
+	min-width: 0;
+	padding: 24px;
+}
+
+.#{$p}-screen {
+	// Two classes: wp-admin's `.wrap h1` would otherwise win.
+	.#{$p}-app &__title {
+		margin: 0;
+		padding: 0;
+		font-size: 20px;
+		font-weight: 700;
+		letter-spacing: -0.2px;
+		line-height: 1.3;
+	}
+
+	&__lede {
+		margin: 4px 0 20px;
+		color: var(--ss-muted);
+		font-size: 13.5px;
+		max-width: 75ch;
+	}
+}
+
+/* ---- Panels ---- */
+.#{$p}-panel {
+	background: var(--ss-surface);
+	border: 1px solid var(--ss-border);
+	border-radius: var(--ss-radius);
+	box-shadow: var(--ss-shadow);
+	margin-bottom: 18px;
+	transition: box-shadow 200ms;
+
+	&.is-focused {
+		box-shadow: 0 0 0 3px var(--ss-glow);
+	}
+
+	&__head {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 8px 12px;
+		padding: 14px 20px;
+		border-bottom: 1px solid var(--ss-border);
+	}
+
+	&__title {
+		margin: 0 auto 0 0;
+		padding: 0;
+		font-size: 15px;
+		font-weight: 600;
+		display: flex;
+		align-items: center;
+		gap: 9px;
+
+		.#{$p}-icon {
+			color: var(--ss-primary);
+		}
+	}
+
+	&__meta {
+		font-size: 12.5px;
+		color: var(--ss-muted);
+	}
+
+	&__body {
+		padding: 18px 20px;
+
+		&.is-flush {
+			padding: 0;
+		}
+	}
+}
+
+.#{$p}-pad {
+	padding: 16px 20px;
+
+	> :last-child {
+		margin-bottom: 0;
+	}
+}
+
+.#{$p}-two {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+	gap: 18px;
+	margin-bottom: 18px;
+
+	> .#{$p}-panel {
+		margin-bottom: 0;
+		min-width: 0;
+	}
+}
+
+.#{$p}-muted {
+	color: var(--ss-muted);
+	max-width: 80ch;
+}
+
+.#{$p}-sub {
+	color: var(--ss-muted);
+	font-size: 12px;
+}
+
+.#{$p}-empty {
+	margin: 0;
+	padding: 18px 20px;
+	color: var(--ss-muted);
+}
+
+.#{$p}-gap {
+	margin-top: 12px;
+}
+
+/* ---- Buttons, pills, controls ---- */
+.#{$p}-btn {
+	display: inline-flex;
+	align-items: center;
+	gap: 7px;
+	padding: 8px 14px;
+	border: 1px solid transparent;
+	border-radius: 10px;
+	font-size: 13px;
+	font-weight: 600;
+	line-height: 1.4;
+	cursor: pointer;
+	white-space: nowrap;
+	text-decoration: none;
+
+	&:disabled {
+		opacity: 0.55;
+		cursor: default;
+	}
+
+	&--primary {
+		background: var(--ss-gradient);
+		color: var(--ss-on-primary) !important;
+
+		&:hover:not(:disabled) {
+			box-shadow: 0 6px 16px var(--ss-glow);
+		}
+	}
+
+	&--soft {
+		background: var(--ss-soft);
+		color: var(--ss-primary-600) !important;
+	}
+
+	&--ghost {
+		background: var(--ss-surface);
+		border-color: var(--ss-border-strong);
+		color: var(--ss-text);
+
+		&:hover:not(:disabled) {
+			border-color: var(--ss-primary);
+			color: var(--ss-primary-600);
+		}
+	}
+
+	&--danger {
+		background: transparent;
+		border-color: var(--ss-danger);
+		color: var(--ss-danger);
+
+		&:hover:not(:disabled) {
+			background: var(--ss-danger);
+			color: var(--ss-on-primary);
+		}
+	}
+
+	&--sm {
+		padding: 5px 10px;
+		font-size: 12px;
+		border-radius: 8px;
+	}
+}
+
+.#{$p}-pill {
+	display: inline-flex;
+	align-items: center;
+	gap: 5px;
+	padding: 2px 9px;
+	border-radius: 20px;
+	font-size: 11.5px;
+	font-weight: 600;
+	white-space: nowrap;
+
+	&::before {
+		content: '';
+		width: 6px;
+		height: 6px;
+		border-radius: 50%;
+		background: currentColor;
+	}
+
+	&--ok {
+		background: var(--ss-success-bg);
+		color: var(--ss-success);
+	}
+
+	&--warn {
+		background: var(--ss-warning-bg);
+		color: var(--ss-warning);
+	}
+
+	&--bad {
+		background: var(--ss-danger-bg);
+		color: var(--ss-danger);
+	}
+
+	&--info {
+		background: var(--ss-info-bg);
+		color: var(--ss-info);
+	}
+
+	&--off {
+		background: var(--ss-sunken);
+		color: var(--ss-muted);
+	}
+}
+
+
+.#{$p}-nav__count {
+	margin-left: auto;
+	min-width: 20px;
+	padding: 1px 6px;
+	border-radius: 20px;
+	background: var(--ss-sunken);
+	color: var(--ss-muted);
+	font-size: 11.5px;
+	font-weight: 600;
+	text-align: center;
+}
+
+.#{$p}-nav__item.is-active .#{$p}-nav__count {
+	background: var(--ss-on-primary-dim);
+	color: var(--ss-on-primary);
+}
+
+.#{$p}-app.is-collapsed .#{$p}-nav__count {
+	display: none;
+}
+
+.#{$p}-external {
+	display: inline-flex;
+	align-items: baseline;
+	gap: 5px;
+	text-decoration: none;
+
+	&:hover {
+		text-decoration: underline;
+	}
+
+	.#{$p}-icon {
+		align-self: center;
+		opacity: 0.7;
+	}
+}
+
+/* ---- Forms ---- */
+.#{$p}-split {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) minmax(260px, 340px);
+	gap: 18px;
+	align-items: start;
+}
+
+.#{$p}-form {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+
+	&__foot {
+		display: flex;
+		justify-content: flex-end;
+		padding-top: 4px;
+	}
+}
+
+.#{$p}-field {
+	display: flex;
+	flex-direction: column;
+	gap: 5px;
+
+	&__label {
+		font-size: 12.5px;
+		font-weight: 600;
+		color: var(--ss-muted);
+	}
+
+	.#{$p}-app &__help {
+		margin: 0;
+		font-size: 12.5px;
+		color: var(--ss-muted);
+	}
+}
+
+.#{$p}-app .#{$p}-input {
+	width: 100%;
+	max-width: 100%;
+	min-height: 36px;
+	margin: 0;
+	padding: 7px 11px;
+	border: 1px solid var(--ss-border-strong);
+	border-radius: 9px;
+	background-color: var(--ss-surface);
+	color: var(--ss-text);
+	font-size: 13.5px;
+	font-weight: 400;
+	line-height: 1.5;
+	box-shadow: none;
+
+	&::placeholder {
+		color: var(--ss-muted);
+		opacity: 0.8;
+	}
+
+	&:focus {
+		border-color: var(--ss-primary);
+		box-shadow: 0 0 0 3px var(--ss-glow);
+		outline: 0;
+	}
+
+	&.is-mono {
+		font-family: var(--ss-mono);
+		font-size: 12.5px;
+	}
+}
+
+.#{$p}-app select.#{$p}-input {
+	padding-right: 28px;
+}
+
+.#{$p}-app textarea.#{$p}-input {
+	resize: vertical;
+}
+
+.#{$p}-inline {
+	margin-top: 14px;
+
+	&__row {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 8px;
+
+		.#{$p}-input {
+			flex: 1 1 280px;
+			width: auto;
+		}
+	}
+}
+
+.#{$p}-similar {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+
+	li {
+		margin: 0;
+		padding: 11px 20px;
+		border-bottom: 1px solid var(--ss-border);
+
+		&:last-child {
+			border-bottom: 0;
+		}
+	}
+
+	&__number {
+		font-family: var(--ss-mono);
+		font-size: 12.5px;
+		color: var(--ss-muted);
+		margin-right: 2px;
+	}
+
+	.#{$p}-app &__none {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+		margin: 0;
+		color: var(--ss-success);
+	}
+}
+
+.#{$p}-empty {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 6px;
+}
+
+.#{$p}-loading {
+	height: 180px;
+	border-radius: var(--ss-radius);
+	background: linear-gradient(90deg, var(--ss-sunken) 25%, var(--ss-surface) 50%, var(--ss-sunken) 75%);
+	background-size: 200% 100%;
+	animation: #{$p}-shimmer 1.4s linear infinite;
+}
+
+@keyframes #{$p}-shimmer {
+	to {
+		background-position: -200% 0;
+	}
+}
+
+.#{$p}-note {
+	display: flex;
+	gap: 10px;
+	padding: 11px 14px;
+	border-radius: 10px;
+	background: var(--ss-info-bg);
+	font-size: 13px;
+	margin: 14px 0 0;
+
+	.#{$p}-icon {
+		color: var(--ss-info);
+		margin-top: 1px;
+	}
+
+	&--warn {
+		background: var(--ss-warning-bg);
+
+		.#{$p}-icon {
+			color: var(--ss-warning);
+		}
+	}
+
+	.#{$p}-btn {
+		margin-left: 6px;
+	}
+}
+
+.#{$p}-screen > .#{$p}-note {
+	margin: 0 0 18px;
+}
+
+/* ---- Tables ---- */
+.#{$p}-scroll {
+	overflow-x: auto;
+}
+
+.#{$p}-grid {
+	width: 100%;
+	border-collapse: collapse;
+	font-size: 13px;
+
+	th {
+		text-align: left;
+		padding: 10px 16px;
+		font-size: 11.5px;
+		text-transform: uppercase;
+		letter-spacing: 0.4px;
+		color: var(--ss-muted);
+		font-weight: 600;
+		background: var(--ss-sunken);
+		border-bottom: 1px solid var(--ss-border);
+		white-space: nowrap;
+	}
+
+	td {
+		padding: 11px 16px;
+		border-bottom: 1px solid var(--ss-border);
+		vertical-align: middle;
+		white-space: nowrap;
+		font-variant-numeric: tabular-nums;
+
+		&.is-wrap {
+			white-space: normal;
+			min-width: 200px;
+			word-break: break-word;
+		}
+
+		&.is-mono {
+			font-family: var(--ss-mono);
+			font-size: 12.5px;
+		}
+
+		.#{$p}-input {
+			min-width: 320px;
+		}
+	}
+
+	tr:last-child td {
+		border-bottom: 0;
+	}
+}
+
+.#{$p}-sort {
+	display: inline-flex;
+	align-items: center;
+	gap: 4px;
+	padding: 0;
+	border: 0;
+	background: none;
+	color: inherit;
+	font: inherit;
+	letter-spacing: inherit;
+	text-transform: inherit;
+	cursor: pointer;
+
+	&__arrow {
+		opacity: 0;
+	}
+
+	&:hover &__arrow,
+	&:focus-visible &__arrow,
+	&.is-active &__arrow {
+		opacity: 1;
+	}
+
+	&.is-active {
+		color: var(--ss-text);
+	}
+}
+
+.#{$p}-edit {
+	margin-left: 10px;
+	padding: 0;
+	border: 0;
+	background: none;
+	font-family: inherit;
+	cursor: pointer;
+	color: var(--ss-muted);
+	font-size: 12px;
+
+	&:hover,
+	&:focus {
+		color: var(--ss-primary-600);
+	}
+}
+
+.#{$p}-pager {
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+	gap: 12px;
+	padding: 10px 16px;
+	border-top: 1px solid var(--ss-border);
+	color: var(--ss-muted);
+	font-size: 13px;
+}
+
+/* ---- Toasts ---- */
+.#{$p}-toasts {
+	position: fixed;
+	right: 24px;
+	bottom: 24px;
+	z-index: 100000;
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+}
+
+.#{$p}-toast {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	max-width: 420px;
+	padding: 10px 14px;
+	border-radius: 10px;
+	background: #1f2328;
+	color: #fff;
+	font-size: 13px;
+	font-weight: 600;
+	box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3);
+
+	&--error {
+		background: #d6362a;
+	}
+}
+
+@media (max-width: 960px) {
+	.#{$p}-split {
+		grid-template-columns: minmax(0, 1fr);
+	}
+}
+
+@media (max-width: 782px) {
+	.#{$p}-body {
+		flex-direction: column;
+	}
+
+	.#{$p}-nav,
+	.#{$p}-app.is-collapsed .#{$p}-nav {
+		flex: 0 0 auto;
+		flex-direction: row;
+		overflow-x: auto;
+		border-right: 0;
+		border-bottom: 1px solid var(--ss-border);
+		padding: 10px;
+	}
+
+	.#{$p}-app.is-collapsed .#{$p}-nav__label {
+		display: inline;
+	}
+
+	.#{$p}-nav__item,
+	.#{$p}-app.is-collapsed .#{$p}-nav__item {
+		width: auto;
+		padding: 9px 12px;
+
+		&.is-last {
+			margin-top: 0;
+
+			&::before {
+				display: none;
+			}
+		}
+	}
+
+	.#{$p}-content {
+		padding: 16px;
+	}
+}
+
+/* The filter row, the totals and the chart of views per day */
+.#{$p}-range {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 8px;
+	margin-bottom: 16px;
+
+	&__dates {
+		display: inline-flex;
+		align-items: center;
+		gap: 6px;
+		color: var(--ss-muted);
+	}
+}
+
+/* A control that sits in a row: the dates, the type, the title search */
+.#{$p}-app .#{$p}-input--inline {
+	width: auto;
+	min-height: 30px;
+	padding: 3px 10px;
+	font-size: 12.5px;
+	color-scheme: light;
+}
+
+.#{$p}-app[data-theme='dark'] .#{$p}-input--inline {
+	color-scheme: dark;
+}
+
+@media (prefers-color-scheme: dark) {
+	.#{$p}-app:not([data-theme='light']) .#{$p}-input--inline {
+		color-scheme: dark;
+	}
+}
+
+.#{$p}-tiles {
+	display: grid;
+	gap: 16px;
+	grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+	margin-bottom: 16px;
+}
+
+.#{$p}-tile {
+	background: var(--ss-surface);
+	border: 1px solid var(--ss-border);
+	border-radius: 10px;
+	box-shadow: var(--ss-shadow);
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+	padding: 18px 20px;
+
+	&__label {
+		color: var(--ss-muted);
+		font-size: 13px;
+	}
+
+	&__value {
+		color: var(--ss-text);
+		font-size: 28px;
+		font-variant-numeric: tabular-nums;
+		font-weight: 600;
+		line-height: 1.15;
+	}
+}
+
+.#{$p}-chart {
+	&__top,
+	&__axis {
+		color: var(--ss-muted);
+		display: flex;
+		font-size: 12px;
+		font-variant-numeric: tabular-nums;
+		justify-content: space-between;
+	}
+
+	&__top {
+		min-height: 20px;
+	}
+
+	&__tip {
+		color: var(--ss-text);
+		font-weight: 600;
+	}
+
+	&__bars {
+		align-items: stretch;
+		border-bottom: 1px solid var(--ss-border-strong);
+		border-top: 1px dashed var(--ss-border);
+		display: flex;
+		height: 200px;
+		list-style: none;
+		margin: 6px 0;
+		padding: 0;
+	}
+
+	&__day {
+		flex: 1 1 0;
+		margin: 0;
+		min-width: 0;
+	}
+
+	// The whole column is the target, so a low bar is as easy to point at as a high one.
+	&__hit {
+		align-items: flex-end;
+		background: none;
+		border: 0;
+		cursor: default;
+		display: flex;
+		height: 100%;
+		padding: 0 1px;
+		width: 100%;
+
+		&.is-active,
+		&:focus-visible {
+			background: var(--ss-soft);
+			outline: none;
+		}
+	}
+
+	&__bar {
+		background: var(--ss-primary-600);
+		border-radius: 4px 4px 0 0;
+		display: block;
+		margin: 0 auto;
+		max-width: 24px;
+		width: 100%;
+	}
+}
+
+.#{$p}-grid .is-number {
+	font-variant-numeric: tabular-nums;
+	text-align: right;
+	white-space: nowrap;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.#{$p}-app * {
+		transition: none !important;
+		animation: none !important;
+	}
+}
+
+/* ---- Social Share: lists of networks, colours, the card ---- */
+.#{$p}-checks {
+	display: flex;
+	flex-direction: column;
+	border: 1px solid var(--ss-border);
+	border-radius: 10px;
+	overflow: hidden;
+
+	&__row {
+		display: flex;
+		align-items: center;
+		gap: 10px;
+		min-height: 46px;
+		padding: 6px 12px;
+		background: var(--ss-surface);
+
+		& + & {
+			border-top: 1px solid var(--ss-border);
+		}
+
+		&.is-off {
+			color: var(--ss-muted);
+		}
+
+		label {
+			display: flex;
+			align-items: center;
+			gap: 10px;
+			flex: 1;
+			cursor: pointer;
+		}
+	}
+
+	&__move {
+		display: inline-flex;
+		gap: 4px;
+	}
+}
+
+.#{$p}-choices {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+
+	label {
+		display: flex;
+		align-items: flex-start;
+		gap: 10px;
+		cursor: pointer;
+	}
+
+	input {
+		margin-top: 3px;
+	}
+
+	small {
+		display: block;
+		color: var(--ss-muted);
+		font-size: 12.5px;
+	}
+}
+
+.#{$p}-swatches {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+	gap: 12px;
+
+	label {
+		display: flex;
+		align-items: center;
+		gap: 10px;
+		padding: 8px 10px;
+		border: 1px solid var(--ss-border);
+		border-radius: 10px;
+		background: var(--ss-surface);
+		cursor: pointer;
+	}
+
+	input[type='color'] {
+		width: 34px;
+		height: 28px;
+		padding: 0;
+		border: 1px solid var(--ss-border-strong);
+		border-radius: 6px;
+		background: none;
+		cursor: pointer;
+	}
+
+	code {
+		margin-left: auto;
+	}
+}
+
+.#{$p}-card {
+	display: block;
+	width: 100%;
+	max-width: 600px;
+	aspect-ratio: 1200 / 630;
+	border: 1px solid var(--ss-border);
+	border-radius: 10px;
+	object-fit: cover;
+	background: var(--ss-sunken);
+}
+
+.#{$p}-copyrow {
+	display: flex;
+	gap: 8px;
+	align-items: center;
+	flex-wrap: wrap;
+
+	code {
+		word-break: break-all;
+	}
+}
+
+.#{$p}-actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+	align-items: center;
+	margin-top: 16px;
+}
+
+.#{$p}-steps {
+	margin: 0 0 0 18px;
+	padding: 0;
+
+	li {
+		margin-bottom: 6px;
+	}
+}
+
+.#{$p}-table-title {
+	margin: 18px 0 8px;
+	font-size: 14px;
+	font-weight: 600;
+}
