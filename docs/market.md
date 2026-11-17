@@ -73,3 +73,37 @@ Sources: [FS Poster on LinkedIn plugins](https://www.fs-poster.com/blog/wordpres
 - Each price on the vendor's own page.
 - Jetpack Social's free share limit today.
 - Whether any plugin added share-format testing since this check.
+
+## 2026-11-17, later: the Pro ideas (nhrrob/nhrrob-social-share-pro#4)
+
+Checked with web searches and the plugins' own wordpress.org pages, after the
+rotating layouts and Results were kept free. Each idea from pro#4 against rule
+5 (nothing paid that another plugin gives free). Installs and dates are as the
+wordpress.org pages showed them that day. "Not found" means a search did not
+find it, not that it does not exist.
+
+| # | Idea | Free elsewhere? | Charged for elsewhere | Verdict |
+|---|---|---|---|---|
+| 1 | Pictures tried the same way, scored by visits | Not found | [OpenGraph.xyz](https://wordpress.org/plugins/opengraph-xyz/) (100+ installs) says its short links "A/B test your OG images"; it needs an OpenGraph.xyz account (trial with a card) and serves images from its own servers, which our rule 1 rules out | **Passes** |
+| 2 | Text variants, scored by visits | Not found | [Revive Social](https://docs.revive.social/article/941-revive-old-post-free-vs-pro) has share variations in its paid plans only, picked at random and not scored | **Passes** |
+| 3 | Best time to share, from the site's own visits | Not found | [Blog2Social](https://www.blog2social.com/en/faq/content/7/1/en/is-blog2social-free.html)'s Best Time Manager is Premium, with set times per network, not times from the site's data (one third-party review says it is free; the vendor's FAQ says Premium) | **Passes** |
+| 4 | More than one LinkedIn account | Partly: [WP LinkedIn Auto Publish](https://wordpress.org/plugins/wp-linkedin-auto-publish/) (free, 7,000+) shares to a profile and several company pages at once | Blog2Social (one account per network in free) | **Fails** for pages; more than one personal profile not found free, but too small for Pro |
+| 5 | LinkedIn and Facebook Pages | Yes: WP LinkedIn Auto Publish and Devenia Autoposter for LinkedIn post to company pages free | Blog2Social, FS Poster | **Fails** |
+| 6 | Bluesky and Mastodon by API | Yes: [Autoblue](https://wordpress.org/plugins/autoblue/) (Bluesky, free), XPoster (Bluesky and Mastodon, about 10,000 installs) | Nelio Content | **Fails**: free later, if wanted |
+| 7 | LinkedIn document (carousel) posts from a post | Not found as a WordPress plugin; outside tools (Publer, Buffer, Typefully) post PDFs | Those tools are paid services | **Passes on the market; unconfirmed on the API.** Microsoft's Documents API page lists `w_member_social`, but it sits under Community Management, and only a third-party guide says a self-serve app can post a document to a personal profile |
+| 8 | X thread from a post, by hand | Yes, with AI: [Radical Writes Content Repurposer](https://wordpress.org/plugins/radical-writes-content-repurposer/) drafts a thread in its free tier; Jetpack published threads in 2021 (not checked now) | | **Fails**, or too close to free |
+| 9 | Share texts drafted by AI | Yes: [Advanced Social Share Assistant](https://wordpress.org/plugins/famety-social-share-assistant/) (free, with the owner's own OpenAI key) | Bit Social's AI looks paid | **Fails** |
+
+Other sources: [Revive Social variations](https://docs.revive.social/article/971-how-to-add-variations-to-revive-old-posts-shares),
+[LinkedIn Documents API](https://learn.microsoft.com/en-us/linkedin/marketing/community-management/shares/documents-api),
+[LinkedIn Posts API](https://learn.microsoft.com/en-us/linkedin/marketing/community-management/shares/posts-api),
+[third-party guide on PDF posts by API](https://opentweet.io/answers/can-you-post-a-linkedin-pdf-carousel-via-api),
+[Devenia Autoposter for LinkedIn](https://wordpress.org/plugins/devenia-autoposter-for-linkedin/).
+
+**What passes:** ideas 1, 2 and 3 have one thing in common. Each is a test the
+site runs on its own shares and scores in the free Results screen. Nobody was
+found doing that free, and the paid tools that come near do it without
+scoring (Revive) or through their own servers (OpenGraph.xyz). Idea 7 passes
+the market check but waits on the LinkedIn API.
+
+**Not done:** asking buyers. Nothing here says anyone would pay for these.
