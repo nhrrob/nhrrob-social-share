@@ -64,7 +64,7 @@ between. It grew out of the blog's own needs (nazmulrobin.com/blog, 1.10.0 to
   plugins (`@wordpress/scripts` only, light and dark): Share buttons, Link
   previews, LinkedIn, Share by hand, Results (`.ai/DESIGN.md`).
 
-## Pro (no confirmed features; ideas in nhrrob/nhrrob-social-share-pro#4)
+## Pro 0.1: share experiments (Robin, 2026-11-17)
 
 The Pro plan lives in
 [nhrrob/nhrrob-social-share-pro](https://github.com/nhrrob/nhrrob-social-share-pro)
@@ -79,7 +79,13 @@ version.
 - ~~Which layout brings readers~~ (Results), **stays free** (Robin, 2026-11-17): visits from each network per layout in the
   first 7 days after a share, from NHR Post Insights (free) when it is active.
 - **Pictures tried the same way:** the featured image against the drawn card
-  (blog #117, second round).
+  (blog #117, second round), through the filter `nhrrob_social_share_picture`.
+- **Text variants:** two or three share texts per post taking turns, through
+  `nhrrob_social_share_text` and the action `nhrrob_social_share_shared`.
+- **Best time to share:** the day and hour of sharing that brought the most
+  visits, from the shares' own times.
+- All three are scored in Results (`nhrrob_social_share_results`); Pro's
+  licence screen is a tab added with the JS filter `nhrrob_social_share.screens`.
 - ~~Share again later~~: Jetpack Social re-shares on its free plan, so under
   rule 5 it cannot be Pro (`docs/market.md`). Free later, or not at all.
 
@@ -133,3 +139,4 @@ plugin by tag with Composer, like Post Insights.
 | 2026-11-17 | The Pro add-on's plan moves to its own repo, nhrrob/nhrrob-social-share-pro, with #10 | The Pro work gets one place to continue from, as for Post Insights Pro. When the layouts leave the free plugin is decided there. |
 | 2026-11-17 | The rotating layouts stay in the free plugin; whether Results moves to Pro is still open | Robin's decision, recorded in the Pro repo's `docs/DECISIONS.md`. |
 | 2026-11-17 | Results (visits per layout) stays in the free plugin too; what Pro carries is open in nhrrob/nhrrob-social-share-pro#4 | Robin's decision, recorded in the Pro repo's `docs/DECISIONS.md`. |
+| 2026-11-17 | Hooks for the Pro add-on in 0.2.0 (#14): picture, text, results, shared, and the screens JS filter | Robin confirmed Pro 0.1 (pictures, text variants, best time to share) in nhrrob/nhrrob-social-share-pro#4. Each hook does nothing without an add-on. |

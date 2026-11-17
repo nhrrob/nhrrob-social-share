@@ -161,4 +161,19 @@ class LinksTest extends TestCase {
 		$this->assertSame( 'a', $links['x']['layout'] );
 		$this->assertSame( 'a', $links['facebook']['layout'] );
 	}
+
+	public function test_an_add_on_can_change_the_text_of_each_network() {
+		$this->meta = array( Keys::LINKEDIN_TEXT => 'The LinkedIn text' );
+		$this->layouts( 'a', 'a' );
+
+		$post = (object) array( 'ID' => 1 );
+
+		WP_Mock::onFilter( 'nhrrob_social_share_text' )->with( 'A post & more', $post, 'x' )->reply( 'Second X text' );
+		WP_Mock::onFilter( 'nhrrob_social_share_text' )->with( 'The LinkedIn text', $post, 'facebook' )->reply( 'Second text' );
+
+		$links = Links::all( $post );
+
+		$this->assertStringStartsWith( 'https://x.com/intent/post?text=Second%20X%20text&url=', $links['x']['url'] );
+		$this->assertSame( 'Second text', $links['facebook']['copy'] );
+	}
 }

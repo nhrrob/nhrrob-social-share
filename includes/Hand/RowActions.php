@@ -148,6 +148,16 @@ class RowActions {
 			Layout::save( $post_id, $network, $links[ $network ]['layout'] );
 		}
 
+		/**
+		 * A post was shared: on LinkedIn, or by hand (the link was used,
+		 * which may happen more than once). `$network` is `linkedin`, `x`,
+		 * `facebook`, `medium`, `reddit` or a Reddit target such as `r_wordpress`.
+		 *
+		 * @param int    $post_id Post ID.
+		 * @param string $network The network.
+		 */
+		do_action( 'nhrrob_social_share_shared', $post_id, $network );
+
 		add_filter( 'allowed_redirect_hosts', array( $this, 'allow_networks' ) );
 		wp_safe_redirect( $links[ $network ]['url'] );
 		exit;

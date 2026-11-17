@@ -61,14 +61,18 @@ class Visits {
 	/**
 	 * Shares and the visits from one network per layout, in each share's first DAYS.
 	 *
+	 * An add-on can group shares by something else than the layout by
+	 * passing its own keys.
+	 *
 	 * @param array  $shares  Post ID => [ layout, time of the share ].
 	 * @param string $network The network's key in `Networks::NETWORKS`.
+	 * @param array  $keys    The layouts, or other keys the shares are grouped by.
 	 * @return array Layout => [ shares, visits, counting ], where counting is the shares still in their first DAYS.
 	 */
-	public static function rows( $shares, $network ) {
+	public static function rows( $shares, $network, $keys = Pattern::ALL ) {
 		global $wpdb;
 
-		$rows = array_fill_keys( Pattern::ALL, [ 0, 0, 0 ] );
+		$rows = array_fill_keys( $keys, [ 0, 0, 0 ] );
 
 		if ( ! $shares ) {
 			return $rows;

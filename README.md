@@ -5,7 +5,7 @@ between and without tracking readers: share buttons, link previews with a
 drawn card, LinkedIn from the site's own app, and X, Facebook, Reddit and
 Medium filled in by hand, with three rotating layouts and their results.
 
-Private repository, version 0.1. It grew out of the sharing code of the blog
+Private repository, version 0.2. It grew out of the sharing code of the blog
 at nazmulrobin.com/blog (nhrrob/nazmulrobin_blog), which now requires it by
 its release tags with Composer. The scope and the decisions are in
 [`.ai/PRD.md`](.ai/PRD.md), the screens in [`.ai/DESIGN.md`](.ai/DESIGN.md),

@@ -9,6 +9,7 @@
 
 namespace NHRRob\SocialShare\Preview;
 
+use NHRRob\SocialShare\Linkedin\Image;
 use NHRRob\SocialShare\Options;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -103,9 +104,9 @@ class Meta {
 		$description = wp_strip_all_tags( get_the_excerpt( $post ), true );
 		$image       = get_the_post_thumbnail_url( $post, 'large' );
 
-		// A post without its own image gets the card drawn from its title.
-		$drawn = $image ? '' : Card::url( $post );
-		$image = $image ? $image : $drawn;
+		// A post without its own image gets the card drawn from its title, as does one whose picture is the card.
+		$drawn = $image && 'featured' === Image::source( $post ) ? '' : Card::url( $post );
+		$image = $drawn ? $drawn : $image;
 		$card  = $image ? 'summary_large_image' : 'summary';
 		$image = $image ? $image : get_site_icon_url( 512 );
 

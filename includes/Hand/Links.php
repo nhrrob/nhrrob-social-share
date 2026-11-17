@@ -95,8 +95,11 @@ class Links {
 	 * @return array
 	 */
 	private static function x( $post, $title, $permalink ) {
-		$text   = (string) get_post_meta( $post->ID, Keys::X_TEXT, true );
-		$text   = '' === $text ? $title : $text;
+		$text = (string) get_post_meta( $post->ID, Keys::X_TEXT, true );
+		$text = '' === $text ? $title : $text;
+
+		/** This filter is documented in includes/Linkedin/Share.php */
+		$text   = trim( (string) apply_filters( 'nhrrob_social_share_text', $text, $post, 'x' ) );
 		$own    = (bool) preg_match( '#https?://#i', $text );
 		$layout = Layout::choose( $post->ID, 'x', $own );
 
@@ -121,7 +124,7 @@ class Links {
 	 * @return array
 	 */
 	private static function facebook( $post, $permalink ) {
-		$text   = Share::text( $post );
+		$text   = Share::text( $post, 'facebook' );
 		$own    = (bool) preg_match( '#https?://#i', $text );
 		$layout = Layout::choose( $post->ID, 'facebook', $own );
 		$url    = 'https://www.facebook.com/';

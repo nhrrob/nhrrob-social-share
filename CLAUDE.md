@@ -3,7 +3,7 @@
 Slug `nhrrob-social-share` · display name "NHR Social Share" (working name) ·
 menu label **Social Share** (Settings → Social Share; never "NHR" in the UI).
 
-Private repository, version 0.1. The code came out of the blog's site plugin
+Private repository, version 0.2. The code came out of the blog's site plugin
 (nhrrob/nazmulrobin_blog), which now requires this plugin by its release tags
 with Composer, so a release here reaches the live blog in its next Composer
 update. A paid add-on, `nhrrob-social-share-pro`, comes later, sold through
@@ -70,6 +70,11 @@ tests/             PHPUnit + WP_Mock
 - filter `nhrrob_social_share_unsaved_pattern` (pattern, time): the layout of a LinkedIn share saved without one (the blog sets its history).
 - filter `nhrrob_social_share_card_label` (label, post): the bottom-left line of the card; the first category by default (the blog gives the series).
 - filter `nhrrob_social_share_linkedin_redirect_uri` (url): the redirect URL registered in the LinkedIn app (the blog keeps its old one).
+- filter `nhrrob_social_share_picture` (source, post): `featured` or `card`, the picture of a post that has a featured image (its shares and og:image). For Pro.
+- filter `nhrrob_social_share_text` (text, post, network): a share's text on `linkedin`, `facebook` or `x`, before the layout adds the link. For Pro.
+- filter `nhrrob_social_share_results` (results): the Results tables; an add-on appends to `networks` (optional `column`, `icon`). `Stats\Visits::rows()` takes its own keys for that. For Pro.
+- action `nhrrob_social_share_shared` (post_id, network): after a LinkedIn share, and each time a share-by-hand link is used. For Pro.
+- JS filter `nhrrob_social_share.screens` (screens, { ui, useToast }): more tabs on the settings screen, as { id, label, Screen }. For Pro.
 - CSS custom property `--nhrrob-social-share-accent`: the colour of the "Copy link" button.
 
 ## Conventions

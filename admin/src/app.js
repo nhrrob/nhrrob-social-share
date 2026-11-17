@@ -3,17 +3,20 @@
  * share. Each screen saves what it changes and gets back what is saved.
  */
 import { useState, useEffect } from '@wordpress/element';
+import { applyFilters } from '@wordpress/hooks';
 import { __ } from '@wordpress/i18n';
 
 import api from './api';
 import AppShell from './components/AppShell';
 import { ToastProvider, useToast } from './components/ToastProvider';
-import { Loading, Note } from './components/ui';
+import * as ui from './components/ui';
 import Buttons from './screens/Buttons';
 import Previews from './screens/Previews';
 import Linkedin from './screens/Linkedin';
 import Hand from './screens/Hand';
 import Results from './screens/Results';
+
+const { Loading, Note } = ui;
 
 const SCREENS = {
 	buttons: Buttons,
@@ -24,14 +27,34 @@ const SCREENS = {
 };
 
 /**
+ * Screens an add-on adds after the plugin's own, through the JS filter
+ * `nhrrob_social_share.screens`: a list of { id, label, Screen }. The second
+ * argument hands the add-on the app's building blocks, so its screens look
+ * the same. Read once, at the first render, after every script has loaded.
+ *
+ * @return {Array} Added screens.
+ */
+function addedScreens() {
+	const added = applyFilters( 'nhrrob_social_share.screens', [], {
+		ui,
+		useToast,
+	} );
+
+	return Array.isArray( added )
+		? added.filter( ( s ) => s && s.id && s.Screen && ! SCREENS[ s.id ] )
+		: [];
+}
+
+/**
  * The tab in the address, so a link (and LinkedIn's way back) can open one.
  *
+ * @param {Object} screens Tab id => screen.
  * @return {string} Tab id.
  */
-function fromAddress() {
+function fromAddress( screens ) {
 	const tab = new URLSearchParams( window.location.search ).get( 'tab' );
 
-	return SCREENS[ tab ] ? tab : 'buttons';
+	return screens[ tab ] ? tab : 'buttons';
 }
 
 /**
@@ -66,7 +89,12 @@ function resultFromAddress() {
 }
 
 function Screens( { boot } ) {
-	const [ active, setActive ] = useState( fromAddress );
+	const [ added ] = useState( addedScreens );
+	const [ screens ] = useState( () => ( {
+		...SCREENS,
+		...Object.fromEntries( added.map( ( s ) => [ s.id, s.Screen ] ) ),
+	} ) );
+	const [ active, setActive ] = useState( () => fromAddress( screens ) );
 	const [ state, setState ] = useState( null );
 	const [ failed, setFailed ] = useState( '' );
 	const [ saving, setSaving ] = useState( false );
@@ -112,8 +140,9 @@ function Screens( { boot } ) {
 		{ id: 'linkedin', label: __( 'LinkedIn', 'nhrrob-social-share' ) },
 		{ id: 'hand', label: __( 'Share by hand', 'nhrrob-social-share' ) },
 		{ id: 'results', label: __( 'Results', 'nhrrob-social-share' ) },
+		...added.map( ( s ) => ( { id: s.id, label: s.label } ) ),
 	];
-	const Screen = SCREENS[ active ];
+	const Screen = screens[ active ];
 
 	let content = <Loading />;
 	if ( failed ) {
