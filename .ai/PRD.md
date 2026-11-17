@@ -75,9 +75,8 @@ between. It grew out of the blog's own needs (nazmulrobin.com/blog, 1.10.0 to
   first 7 days after a share, from NHR Post Insights (free) when it is active.
 - **Pictures tried the same way:** the featured image against the drawn card
   (blog #117, second round).
-- **Share again later:** a post shared once more after a set time, in the
-  layout that did best (to check against the free scheduling of other
-  plugins).
+- ~~Share again later~~: Jetpack Social re-shares on its free plan, so under
+  rule 5 it cannot be Pro (`docs/market.md`). Free later, or not at all.
 
 ## Left out on purpose
 
@@ -122,6 +121,7 @@ plugin by tag with Composer, like Post Insights.
 | Date | Decision | Why |
 |---|---|---|
 | 2026-11-17 | Sharing leaves the blog's site plugin for its own plugin, free plus a Pro add-on | It is stable, about 2,500 lines, and built from real use, so it can be a product (nhrrob/nazmulrobin_blog#139). |
+| 2026-11-17 | Market check (`docs/market.md`, #1): the rotating layouts with visits per layout, and the pictures tried the same way, stay the Pro candidates; "share again later" leaves the Pro list; Bluesky is the first network to post to by API | No plugin found that tests share formats against site visits, while re-sharing is free in Jetpack Social. Prices of others: $27–39 per site per year for buttons, $58–199 for auto-posters. |
 | 2026-11-17 | The rotating layouts and Results ship in the free 0.1 | The blog uses them every day and the Pro add-on does not exist yet; they move to Pro only if #1 finds nobody gives them free (#10). |
 | 2026-11-17 | Automatic LinkedIn shares only on a `production` environment | A staging or local copy holds the live site's token and must never post. The blog keeps its own staging check through the filter. |
 | 2026-11-17 | Facebook and X by hand, not by API | Facebook lets no app post to a personal profile; X charges per post and the author has no Premium, so X texts stay under 280 characters (blog #134, #135). |
