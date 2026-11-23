@@ -55,7 +55,8 @@ class Visits {
 	 * @return bool
 	 */
 	public static function available() {
-		return class_exists( Installer::class );
+		// The one table of NHR Post Insights 0.6.0 and later.
+		return class_exists( Installer::class ) && method_exists( Installer::class, 'table' );
 	}
 
 	/**
@@ -84,7 +85,7 @@ class Visits {
 			$ids = implode( ',', array_map( 'intval', array_keys( $shares ) ) );
 
 			// phpcs:ignore WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- the settings screen only, from Post Insights' own table; $ids are integers.
-			$hosts = (array) $wpdb->get_results( $wpdb->prepare( "SELECT post_id, day, host, views FROM %i WHERE post_id IN ($ids)", Installer::referrers_table() ) );
+			$hosts = (array) $wpdb->get_results( $wpdb->prepare( "SELECT post_id, day, item AS host, views FROM %i WHERE kind = %s AND post_id IN ($ids)", Installer::table(), Installer::HOST ) );
 		}
 
 		$today = wp_date( 'Y-m-d' );
