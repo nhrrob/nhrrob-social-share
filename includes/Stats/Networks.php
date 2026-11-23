@@ -8,7 +8,7 @@
 
 namespace NHRRob\SocialShare\Stats;
 
-use NHRRob\PostInsights\Installer;
+use NHRRob\PostInsights\Read;
 use NHRRob\PostInsights\Store;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -74,9 +74,7 @@ class Networks {
 	 * @return array
 	 */
 	public function fill_tiles( $stats, $days, $post = 0, $filters = array() ) {
-		global $wpdb;
-
-		if ( ! class_exists( Store::class ) || ! class_exists( Installer::class ) ) {
+		if ( ! class_exists( Store::class ) || ! Visits::available() ) {
 			return $stats;
 		}
 
@@ -89,14 +87,11 @@ class Networks {
 		$from = ! empty( $filters['from'] ) ? (string) $filters['from'] : Store::from( $days );
 		$to   = ! empty( $filters['to'] ) ? (string) $filters['to'] : current_time( 'Y-m-d' );
 
-		// phpcs:ignore WordPress.DB.DirectDatabaseQuery -- one read for the dashboard, from Post Insights' own table.
-		$hosts = $wpdb->get_results( $wpdb->prepare( 'SELECT host, SUM(views) AS views FROM %i WHERE day BETWEEN %s AND %s GROUP BY host', Installer::referrers_table(), $from, $to ) );
-
-		foreach ( (array) $hosts as $row ) {
-			$key = self::network( (string) $row->host );
+		foreach ( Read::hosts( $from, $to ) as $host => $views ) {
+			$key = self::network( (string) $host );
 
 			if ( $key ) {
-				$stats['extra'][ $key ] += (int) $row->views;
+				$stats['extra'][ $key ] += $views;
 			}
 		}
 

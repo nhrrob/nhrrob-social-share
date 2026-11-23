@@ -4,7 +4,7 @@ Tags: social share, linkedin, open graph, share buttons, privacy
 Requires at least: 6.6
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 0.2.0
+Stable tag: 0.2.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -48,6 +48,9 @@ Yes. On "Automatic" the link preview tags are left to them. The share buttons an
 Its settings, the LinkedIn connection and the share texts and history it kept with each post. The drawn cards stay in the uploads folder, under nhrrob-social-share.
 
 == Changelog ==
+
+= 0.2.1 =
+* The Results screen and the Post Insights tiles get their visits from NHR Post Insights 0.6.0's `Read` functions instead of querying its tables, so a change to how Post Insights stores its numbers no longer affects them. With an older NHR Post Insights they show no visits.
 
 = 0.2.0 =
 * Hooks for add-ons: the filters `nhrrob_social_share_picture` (featured image or card), `nhrrob_social_share_text` (a share's text) and `nhrrob_social_share_results` (the Results tables), the action `nhrrob_social_share_shared`, and the JS filter `nhrrob_social_share.screens` (more tabs on the settings screen). Nothing changes for a site without an add-on.

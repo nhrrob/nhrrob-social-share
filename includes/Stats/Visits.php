@@ -9,7 +9,7 @@
 
 namespace NHRRob\SocialShare\Stats;
 
-use NHRRob\PostInsights\Installer;
+use NHRRob\PostInsights\Read;
 use NHRRob\SocialShare\Hand\Layout;
 use NHRRob\SocialShare\Linkedin\Pattern;
 
@@ -50,12 +50,13 @@ class Visits {
 	}
 
 	/**
-	 * Whether visits can be counted: NHR Post Insights is active.
+	 * Whether visits can be counted: NHR Post Insights 0.6.0 or later is
+	 * active, whose `Read` gives its numbers to other plugins.
 	 *
 	 * @return bool
 	 */
 	public static function available() {
-		return class_exists( Installer::class );
+		return class_exists( Read::class );
 	}
 
 	/**
@@ -70,8 +71,6 @@ class Visits {
 	 * @return array Layout => [ shares, visits, counting ], where counting is the shares still in their first DAYS.
 	 */
 	public static function rows( $shares, $network, $keys = Pattern::ALL ) {
-		global $wpdb;
-
 		$rows = array_fill_keys( $keys, [ 0, 0, 0 ] );
 
 		if ( ! $shares ) {
@@ -81,10 +80,7 @@ class Visits {
 		$hosts = [];
 
 		if ( self::available() ) {
-			$ids = implode( ',', array_map( 'intval', array_keys( $shares ) ) );
-
-			// phpcs:ignore WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- the settings screen only, from Post Insights' own table; $ids are integers.
-			$hosts = (array) $wpdb->get_results( $wpdb->prepare( "SELECT post_id, day, host, views FROM %i WHERE post_id IN ($ids)", Installer::referrers_table() ) );
+			$hosts = Read::referrals( array_keys( $shares ) );
 		}
 
 		$today = wp_date( 'Y-m-d' );
@@ -106,10 +102,10 @@ class Visits {
 		}
 
 		foreach ( $hosts as $row ) {
-			$id = (int) $row->post_id;
+			$id = $row['post_id'];
 
-			if ( isset( $range[ $id ] ) && $row->day >= $range[ $id ][1] && $row->day <= $range[ $id ][2] && Networks::network( (string) $row->host ) === $network ) {
-				$rows[ $range[ $id ][0] ][1] += (int) $row->views;
+			if ( isset( $range[ $id ] ) && $row['day'] >= $range[ $id ][1] && $row['day'] <= $range[ $id ][2] && Networks::network( $row['host'] ) === $network ) {
+				$rows[ $range[ $id ][0] ][1] += $row['views'];
 			}
 		}
 

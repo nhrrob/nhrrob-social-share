@@ -5,7 +5,7 @@
  * Description: Share each post where its readers are: share buttons, link previews with a drawn card, LinkedIn sharing from your own app, and X, Facebook, Reddit and Medium filled in by hand. No service in between and nothing that tracks readers.
  * Author: Nazmul Hasan Robin
  * Author URI: https://profiles.wordpress.org/nhrrob/
- * Version: 0.2.0
+ * Version: 0.2.1
  * Requires at least: 6.6
  * Requires PHP: 7.4
  * Text Domain: nhrrob-social-share
@@ -31,7 +31,7 @@ final class NHRRob_Social_Share {
 	 *
 	 * @var string
 	 */
-	const VERSION = '0.2.0';
+	const VERSION = '0.2.1';
 
 	/**
 	 * The classes that register hooks, each in its own init().
