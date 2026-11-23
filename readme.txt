@@ -50,7 +50,7 @@ Its settings, the LinkedIn connection and the share texts and history it kept wi
 == Changelog ==
 
 = 0.2.1 =
-* The Results screen and the Post Insights tiles read NHR Post Insights 0.6.0, which keeps its counts in one table. With an older NHR Post Insights they show no visits.
+* The Results screen and the Post Insights tiles get their visits from NHR Post Insights 0.6.0's `Read` functions instead of querying its tables, so a change to how Post Insights stores its numbers no longer affects them. With an older NHR Post Insights they show no visits.
 
 = 0.2.0 =
 * Hooks for add-ons: the filters `nhrrob_social_share_picture` (featured image or card), `nhrrob_social_share_text` (a share's text) and `nhrrob_social_share_results` (the Results tables), the action `nhrrob_social_share_shared`, and the JS filter `nhrrob_social_share.screens` (more tabs on the settings screen). Nothing changes for a site without an add-on.
