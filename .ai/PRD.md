@@ -6,7 +6,7 @@ blog since 0.1; prepared for WordPress.org in 0.3. Decisions are in
 
 Slug `nhrrob-social-share` · display name "NHR Social Share" · menu label
 **Social Share** (Settings → Social Share; never "NHR" in the UI). The name
-is a working name until Robin confirms it.
+is final (2026-11-24), with no trademark such as LinkedIn in it.
 
 ## Purpose
 
