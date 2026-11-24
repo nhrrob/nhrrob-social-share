@@ -64,7 +64,7 @@ admin/build/       compiled, committed
 tests/             PHPUnit + WP_Mock
 .github/workflows/php.yml      PHPCS, then per PHP version: syntax, unit tests, smoke test in a real WordPress
 .github/workflows/plugin-check.yml  WordPress.org's Plugin Check on the files the zip holds
-.github/workflows/deploy-on-pushing-a-new-tag.yml           a v<version> tag sends the release to WordPress.org (SVN)
+.github/workflows/deploy-on-pushing-a-new-tag.yml           a v<version> tag sends the release to WordPress.org (SVN) and makes the GitHub release
 .github/workflows/deploy-readme-asset-on-pushing-on-trunk.yml  a push to trunk updates only the readme and the listing's images
 .wordpress-org/    icon, banners and screenshots of the WordPress.org listing
 docs/wporg/        their sources: icon.html, banner.html, render.mjs (Playwright)
@@ -105,9 +105,10 @@ version change.
 2. Tag `main` and push the tag: `git tag v<version> && git push origin
    v<version>`. The tag push, not a GitHub release, runs
    `deploy-on-pushing-a-new-tag.yml`, which sends the version to WordPress.org
-   with the `SVN_USERNAME` and `SVN_PASSWORD` secrets. No GitHub release is
-   needed. Until WordPress.org approves the plugin and the secrets are set,
-   that run fails; the tag still works for the blog.
+   with the `SVN_USERNAME` and `SVN_PASSWORD` secrets, and makes the GitHub
+   release with that version's changelog; don't make one by hand. Until
+   WordPress.org approves the plugin and the secrets are set, the deploy job
+   fails; the GitHub release and the tag still work for the blog.
 3. To change only the readme or the listing's images, push to `trunk`
    (`deploy-readme-asset-on-pushing-on-trunk.yml`). Bring `trunk` up to
    `main` after each release.
