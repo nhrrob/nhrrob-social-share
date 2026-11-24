@@ -3,8 +3,8 @@
 Slug `nhrrob-social-share` · display name "NHR Social Share" (working name) ·
 menu label **Social Share** (Settings → Social Share; never "NHR" in the UI).
 
-Version 0.3, prepared for WordPress.org (2026-11-24) and not yet submitted;
-the repository is made public before submission. The code came out of the
+Version 0.3, public, prepared for WordPress.org (2026-11-24), not yet submitted.
+The code came out of the
 blog's site plugin (nhrrob/nazmulrobin_blog), which requires this plugin by
 its release tags with Composer, so a release here reaches the live blog in its
 next Composer update.
@@ -102,14 +102,15 @@ version change.
 1. On a branch: raise `Version` in the header and `VERSION`, `Stable tag` and
    `package.json`'s `version`, and add a `= x.y.z =` section under
    `== Changelog ==` in `readme.txt`. Merge it into `main`.
-2. On GitHub, create a release from `main` with a new tag `v<version>` and
-   that version's changelog as its notes. The tag push runs
+2. Tag `main` and push the tag: `git tag v<version> && git push origin
+   v<version>`. The tag push, not a GitHub release, runs
    `deploy-on-pushing-a-new-tag.yml`, which sends the version to WordPress.org
-   with the `SVN_USERNAME` and `SVN_PASSWORD` secrets. Until WordPress.org
-   approves the plugin and the secrets are set, that run fails; the tag and
-   release still work for the blog.
-3. To change only the readme or the listing's images, push to `trunk`. Bring
-   `trunk` up to `main` after each release.
+   with the `SVN_USERNAME` and `SVN_PASSWORD` secrets. No GitHub release is
+   needed. Until WordPress.org approves the plugin and the secrets are set,
+   that run fails; the tag still works for the blog.
+3. To change only the readme or the listing's images, push to `trunk`
+   (`deploy-readme-asset-on-pushing-on-trunk.yml`). Bring `trunk` up to
+   `main` after each release.
 
 The blog requires the plugin by these tags with Composer, so a release
 reaches it in Dependabot's next pull request.

@@ -30,8 +30,9 @@ class, run `composer dump-autoload --no-dev`.
 
 ## Releases
 
-By hand: raise the version, merge into `main`, then create a GitHub release
-with the tag `v<version>`. The tag sends it to WordPress.org. The steps are
+By hand: raise the version, merge into `main`, then push the tag
+`v<version>`. The tag push sends it to WordPress.org; no GitHub release is
+needed. A push to `trunk` updates only the readme and the listing's images. The steps are
 in [`CLAUDE.md`](CLAUDE.md#releases).
 
 The listing's icon and banners are drawn from `docs/wporg/icon.html` and
