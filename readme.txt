@@ -4,11 +4,11 @@ Tags: social share, linkedin, open graph, share buttons, privacy
 Requires at least: 6.6
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 0.2.1
+Stable tag: 0.3.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Share each post where its readers are: share buttons, link previews with a drawn card, LinkedIn from your own app, and X, Facebook, Reddit and Medium filled in by hand.
+Share buttons, link previews with a drawn card, LinkedIn sharing from your own app, and X, Facebook, Reddit and Medium filled in by hand.
 
 == Description ==
 NHR Social Share helps you share your posts and helps readers share them, without a service in between and without tracking anyone.
@@ -25,6 +25,12 @@ NHR Social Share helps you share your posts and helps readers share them, withou
 - **A Social Share panel** in the post editor for the post's LinkedIn and Facebook text, its X text with a 280-character count, its Reddit targets and its LinkedIn layout.
 
 Settings → Social Share has a screen for each, in a light and a dark theme.
+
+== Installation ==
+1. Install and activate the plugin from Plugins → Add New, or upload the zip.
+2. Open Settings → Social Share and choose the buttons and their order. They appear under each post at once.
+3. For LinkedIn, follow the steps on the LinkedIn tab: create your own LinkedIn app, add its redirect URL, then save its Client ID and Secret and connect.
+4. For Results, install NHR Post Insights, which counts the visits.
 
 == External services ==
 The plugin connects to LinkedIn only when you connect it and when a post is shared there:
@@ -44,10 +50,29 @@ Without X Premium a post can have at most 280 characters. A link counts as 23.
 = Does it work with Yoast SEO, Rank Math and the like? =
 Yes. On "Automatic" the link preview tags are left to them. The share buttons and the sharing work the same.
 
+= Do I need another plugin for Results? =
+Results counts the visits each share brought, which needs NHR Post Insights (free) to count visits. Without it, everything else works and Results shows no visits.
+
+= Where is the source code? =
+On GitHub: https://github.com/nhrrob/nhrrob-social-share. The settings screen and the editor panel are React apps; their source is in `admin/src` in the plugin, and `npm install && npm run build` rebuilds `admin/build`.
+
 = What is removed when I delete the plugin? =
 Its settings, the LinkedIn connection and the share texts and history it kept with each post. The drawn cards stay in the uploads folder, under nhrrob-social-share.
 
+== Screenshots ==
+
+1. The share buttons under a post: plain links, in the order you choose.
+2. Settings → Social Share: which buttons and their order.
+3. Link previews: the tags, and the card drawn for posts without a featured image, in your colours.
+4. LinkedIn: connect your own LinkedIn app, then share automatically or from the Posts list.
+5. Share by hand, in the dark theme: X, Facebook, Reddit and Medium from the Posts list, Reddit targets and the rotating layouts.
+6. The Posts list: a share link for each network under each post.
+
 == Changelog ==
+
+= 0.3.0 =
+* Ready for WordPress.org: a shorter summary, screenshots, and answers on Results and on where the source is.
+* The plugin zip no longer carries development files (`.eslintrc.js`, `docs/`).
 
 = 0.2.1 =
 * The Results screen and the Post Insights tiles get their visits from NHR Post Insights 0.6.0's `Read` functions instead of querying its tables, so a change to how Post Insights stores its numbers no longer affects them. With an older NHR Post Insights they show no visits.
