@@ -1,6 +1,6 @@
 # NHR Social Share: project notes
 
-Slug `nhrrob-social-share` · display name "NHR Social Share" (working name) ·
+Slug `nhrrob-social-share` · display name "NHR Social Share" ·
 menu label **Social Share** (Settings → Social Share; never "NHR" in the UI).
 
 Version 0.3, public, prepared for WordPress.org (2026-11-24), not yet submitted.
