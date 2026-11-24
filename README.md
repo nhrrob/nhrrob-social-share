@@ -5,11 +5,12 @@ between and without tracking readers: share buttons, link previews with a
 drawn card, LinkedIn from the site's own app, and X, Facebook, Reddit and
 Medium filled in by hand, with three rotating layouts and their results.
 
-Private repository, version 0.2. It grew out of the sharing code of the blog
+Version 0.3, prepared for WordPress.org. It grew out of the sharing code of the blog
 at nazmulrobin.com/blog (nhrrob/nazmulrobin_blog), which now requires it by
 its release tags with Composer. The scope and the decisions are in
 [`.ai/PRD.md`](.ai/PRD.md), the screens in [`.ai/DESIGN.md`](.ai/DESIGN.md),
-the project notes in [`CLAUDE.md`](CLAUDE.md), the open work in the issues.
+the project notes in [`CLAUDE.md`](CLAUDE.md), the decisions in
+[`docs/DECISIONS.md`](docs/DECISIONS.md), the open work in the issues.
 
 ## Development
 
@@ -29,9 +30,10 @@ class, run `composer dump-autoload --no-dev`.
 
 ## Releases
 
-Raise `Version` in the plugin header and `VERSION` in the class, `Stable tag`
-in `readme.txt`, and add a `= x.y.z =` section under `== Changelog ==`.
-Merging that into `main` runs `.github/workflows/release.yml`, which tags
-`v<version>` and makes a GitHub release with that changelog section. The
-tags and releases are the log of what each version contained; the blog
-picks a new one up in Dependabot's next Composer pull request.
+By hand: raise the version, merge into `main`, then create a GitHub release
+with the tag `v<version>`. The tag sends it to WordPress.org. The steps are
+in [`CLAUDE.md`](CLAUDE.md#releases).
+
+The listing's icon and banners are drawn from `docs/wporg/icon.html` and
+`banner.html`: `node docs/wporg/render.mjs` (needs Playwright) writes them
+into `.wordpress-org/`.

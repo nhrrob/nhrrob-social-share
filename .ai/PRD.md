@@ -1,20 +1,19 @@
 # NHR Social Share: scope
 
-First written 2026-11-17 (nhrrob/nazmulrobin_blog#139). 0.1 is built and runs
-the blog. The R&D issue (#1) settles the free and Pro lists; each change it
-makes gets a row under "Decisions".
+First written 2026-11-17 (nhrrob/nazmulrobin_blog#139). Built and running the
+blog since 0.1; prepared for WordPress.org in 0.3. Decisions are in
+[`docs/DECISIONS.md`](../docs/DECISIONS.md).
 
 Slug `nhrrob-social-share` · display name "NHR Social Share" · menu label
-**Social Share** (Settings → Social Share; never "NHR" in the UI). Free
-plugin, plus a paid add-on `nhrrob-social-share-pro` sold through the store.
-The name is a working name until Robin confirms it.
+**Social Share** (Settings → Social Share; never "NHR" in the UI). The name
+is a working name until Robin confirms it.
 
 ## Purpose
 
 Share each post where its readers are, in the way that brings them back, and
 show which way works, from WordPress and without an outside service in
 between. It grew out of the blog's own needs (nazmulrobin.com/blog, 1.10.0 to
-1.30.0), so every feature has been used on a live site before it is sold.
+1.30.0), so every feature has been used on a live site before it ships.
 
 ## Rules
 
@@ -33,9 +32,8 @@ between. It grew out of the blog's own needs (nazmulrobin.com/blog, 1.10.0 to
 4. **Small.** A network or feature is added when it is needed and used, not to
    lengthen a list. No share counts (the networks removed them), no URL
    shortener, no floating bars.
-5. **GPL.** Pro never stops working when a licence ends; the licence sells
-   updates and support. Nothing is paid that other plugins give away free
-   (the rule of the Post Insights Pro PRD); the R&D issue checks each Pro item.
+5. **GPL**, and complete on its own. Hooks let another plugin add to it
+   (see `CLAUDE.md`, "Hooks"); nothing here waits for one.
 
 ## Free, version 0.1 (built 2026-11-17: what the blog had, made to work on any site)
 
@@ -64,30 +62,15 @@ between. It grew out of the blog's own needs (nazmulrobin.com/blog, 1.10.0 to
   plugins (`@wordpress/scripts` only, light and dark): Share buttons, Link
   previews, LinkedIn, Share by hand, Results (`.ai/DESIGN.md`).
 
-## Pro 0.1: share experiments (Robin, 2026-11-17)
+## Also free, since 0.1
 
-The Pro plan lives in
-[nhrrob/nhrrob-social-share-pro](https://github.com/nhrrob/nhrrob-social-share-pro)
-(`docs/PRD.md`, `docs/DECISIONS.md`, `docs/TODO.md`); this list is the short
-version.
-
-- ~~Layouts that take turns~~ on LinkedIn, X and Facebook: A link card, B
-  picture with the link in the text, C picture with the link in the first
+- **Layouts that take turns** on LinkedIn, X and Facebook: A a link card, B a
+  picture with the link in the text, C a picture with the link in the first
   comment (X: in a reply). Each post takes the one used least, or a forced
   one; the Posts list helps with each (download picture, reply with the link,
-  copy the link for the comment). **Stays free** (Robin, 2026-11-17).
-- ~~Which layout brings readers~~ (Results), **stays free** (Robin, 2026-11-17): visits from each network per layout in the
-  first 7 days after a share, from NHR Post Insights (free) when it is active.
-- **Pictures tried the same way:** the featured image against the drawn card
-  (blog #117, second round), through the filter `nhrrob_social_share_picture`.
-- **Text variants:** two or three share texts per post taking turns, through
-  `nhrrob_social_share_text` and the action `nhrrob_social_share_shared`.
-- **Best time to share:** the day and hour of sharing that brought the most
-  visits, from the shares' own times.
-- All three are scored in Results (`nhrrob_social_share_results`); Pro's
-  licence screen is a tab added with the JS filter `nhrrob_social_share.screens`.
-- ~~Share again later~~: Jetpack Social re-shares on its free plan, so under
-  rule 5 it cannot be Pro (`docs/market.md`). Free later, or not at all.
+  copy the link for the comment).
+- **Results:** visits from each network per layout in the first 7 days after
+  a share, from NHR Post Insights when it is active.
 
 ## Left out on purpose
 
@@ -95,9 +78,8 @@ version.
   in rule 3. Looked at on 2026-10-12, 2026-11-03 and 2026-11-17.
 - **A LinkedIn or Facebook Page.** Shares go to the person's profile, which
   reaches their network; a Page reaches only its followers. Can be added if
-  buyers ask.
-- **Instagram, TikTok, Threads, Bluesky, Mastodon** until a buyer needs one;
-  the R&D issue checks which matter.
+  users ask.
+- **Instagram, TikTok, Threads, Bluesky, Mastodon** until someone needs one.
 - **Post analytics from the networks' APIs** (impressions, likes): LinkedIn
   needs Community Management approval (blog #92, #120). Visits to the site are
   counted instead.
@@ -129,14 +111,4 @@ plugin by tag with Composer, like Post Insights.
 
 ## Decisions
 
-| Date | Decision | Why |
-|---|---|---|
-| 2026-11-17 | Sharing leaves the blog's site plugin for its own plugin, free plus a Pro add-on | It is stable, about 2,500 lines, and built from real use, so it can be a product (nhrrob/nazmulrobin_blog#139). |
-| 2026-11-17 | Market check (`docs/market.md`, #1): the rotating layouts with visits per layout, and the pictures tried the same way, stay the Pro candidates; "share again later" leaves the Pro list; Bluesky is the first network to post to by API | No plugin found that tests share formats against site visits, while re-sharing is free in Jetpack Social. Prices of others: $27–39 per site per year for buttons, $58–199 for auto-posters. |
-| 2026-11-17 | The rotating layouts and Results ship in the free 0.1 | The blog uses them every day and the Pro add-on does not exist yet; they move to Pro only if #1 finds nobody gives them free (#10, now nhrrob/nhrrob-social-share-pro#1). |
-| 2026-11-17 | Automatic LinkedIn shares only on a `production` environment | A staging or local copy holds the live site's token and must never post. The blog keeps its own staging check through the filter. |
-| 2026-11-17 | Facebook and X by hand, not by API | Facebook lets no app post to a personal profile; X charges per post and the author has no Premium, so X texts stay under 280 characters (blog #134, #135). |
-| 2026-11-17 | The Pro add-on's plan moves to its own repo, nhrrob/nhrrob-social-share-pro, with #10 | The Pro work gets one place to continue from, as for Post Insights Pro. When the layouts leave the free plugin is decided there. |
-| 2026-11-17 | The rotating layouts stay in the free plugin; whether Results moves to Pro is still open | Robin's decision, recorded in the Pro repo's `docs/DECISIONS.md`. |
-| 2026-11-17 | Results (visits per layout) stays in the free plugin too; what Pro carries is open in nhrrob/nhrrob-social-share-pro#4 | Robin's decision, recorded in the Pro repo's `docs/DECISIONS.md`. |
-| 2026-11-17 | Hooks for the Pro add-on in 0.2.0 (#14): picture, text, results, shared, and the screens JS filter | Robin confirmed Pro 0.1 (pictures, text variants, best time to share) in nhrrob/nhrrob-social-share-pro#4. Each hook does nothing without an add-on. |
+In [`docs/DECISIONS.md`](../docs/DECISIONS.md).

@@ -1,0 +1,25 @@
+name: Plugin Check
+
+# WordPress.org's Plugin Check on what the plugin zip holds: the files that
+# .distignore leaves in, with the production autoloader.
+on:
+  pull_request:
+    branches: [ "main", "trunk" ]
+
+jobs:
+  plugin-check:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Production autoloader (no dev packages)
+      run: composer install --no-dev --no-interaction --optimize-autoloader
+
+    - name: Copy the files the zip holds
+      run: rsync -a --exclude-from=.distignore ./ "$RUNNER_TEMP/nhrrob-social-share/"
+
+    - name: Run Plugin Check
+      uses: wordpress/plugin-check-action@v1
+      with:
+        build-dir: ${{ runner.temp }}/nhrrob-social-share

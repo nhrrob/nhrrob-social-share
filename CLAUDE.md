@@ -3,19 +3,18 @@
 Slug `nhrrob-social-share` · display name "NHR Social Share" (working name) ·
 menu label **Social Share** (Settings → Social Share; never "NHR" in the UI).
 
-Private repository, version 0.2. The code came out of the blog's site plugin
-(nhrrob/nazmulrobin_blog), which now requires this plugin by its release tags
-with Composer, so a release here reaches the live blog in its next Composer
-update. A paid add-on, `nhrrob-social-share-pro`, comes later, sold through
-the store (nhrrob/nazmulrobin_store). Its plan, decisions and to-do are in
-[nhrrob/nhrrob-social-share-pro](https://github.com/nhrrob/nhrrob-social-share-pro)
-(`docs/`); until it is built the rotating layouts and their results stay in
-the free plugin.
+Version 0.3, prepared for WordPress.org (2026-11-24) and not yet submitted;
+the repository is made public before submission. The code came out of the
+blog's site plugin (nhrrob/nazmulrobin_blog), which requires this plugin by
+its release tags with Composer, so a release here reaches the live blog in its
+next Composer update.
 
 ## Read first
 
-- `.ai/PRD.md`: purpose, rules, the free and Pro lists, what is left out, the
-  identifiers and the decisions. Check it before proposing a feature.
+- `.ai/PRD.md`: purpose, rules, what is built, what is left out and the
+  identifiers. Check it before proposing a feature.
+- `docs/DECISIONS.md` (one row per decision) and `docs/notes/YYYY-MM-DD.md`
+  (one per working session): update both in the same pull request.
 - `.ai/DESIGN.md` and `.ai/screens/`: the settings app and the editor panel.
 - The open issues, in their numbered order. When asked to "continue", say in
   a few lines where each stands, then work through them from the top.
@@ -31,13 +30,16 @@ the free plugin.
    Reddit, Medium): open the network's page filled in, copy what it cannot
    take, remember what was used.
 4. **Small.** A network or feature is added when it is needed.
-5. **GPL.** Pro never stops working when a licence ends, and nothing is paid
-   that other plugins give away free.
+5. **GPL**, and complete on its own. Add-ons extend it only through the hooks
+   below.
 6. **Identifiers:** namespace `NHRRob\SocialShare\`, class
    `NHRRob_Social_Share`, constants `NHRROB_SOCIAL_SHARE_*`, option, meta and
    hook prefix `nhrrob_social_share_`, CSS and HTML id prefix
    `nhrrob-social-share-`, REST namespace `nhrrob-social-share/v1`, text domain
    `nhrrob-social-share`.
+7. **Public repository.** Pricing, competitor research, positioning and plans
+   for a paid version never go in this repo, its issues or its pull requests.
+   They live in the private add-on repo's `docs/`.
 
 ## Layout
 
@@ -61,7 +63,11 @@ admin/src/         React: index.js + app.js + screens/ (Buttons, Previews, Linke
 admin/build/       compiled, committed
 tests/             PHPUnit + WP_Mock
 .github/workflows/php.yml      PHPCS, then per PHP version: syntax, unit tests, smoke test in a real WordPress
-.github/workflows/release.yml  tag v<version> and a release with readme.txt's changelog when Version changes on main
+.github/workflows/plugin-check.yml  WordPress.org's Plugin Check on the files the zip holds
+.github/workflows/deploy-on-pushing-a-new-tag.yml           a v<version> tag sends the release to WordPress.org (SVN)
+.github/workflows/deploy-readme-asset-on-pushing-on-trunk.yml  a push to trunk updates only the readme and the listing's images
+.wordpress-org/    icon, banners and screenshots of the WordPress.org listing
+docs/wporg/        their sources: icon.html, banner.html, render.mjs (Playwright)
 ```
 
 ## Hooks
@@ -70,11 +76,11 @@ tests/             PHPUnit + WP_Mock
 - filter `nhrrob_social_share_unsaved_pattern` (pattern, time): the layout of a LinkedIn share saved without one (the blog sets its history).
 - filter `nhrrob_social_share_card_label` (label, post): the bottom-left line of the card; the first category by default (the blog gives the series).
 - filter `nhrrob_social_share_linkedin_redirect_uri` (url): the redirect URL registered in the LinkedIn app (the blog keeps its old one).
-- filter `nhrrob_social_share_picture` (source, post): `featured` or `card`, the picture of a post that has a featured image (its shares and og:image). For Pro.
-- filter `nhrrob_social_share_text` (text, post, network): a share's text on `linkedin`, `facebook` or `x`, before the layout adds the link. For Pro.
-- filter `nhrrob_social_share_results` (results): the Results tables; an add-on appends to `networks` (optional `column`, `icon`). `Stats\Visits::rows()` takes its own keys for that. For Pro.
-- action `nhrrob_social_share_shared` (post_id, network): after a LinkedIn share, and each time a share-by-hand link is used. For Pro.
-- JS filter `nhrrob_social_share.screens` (screens, { ui, useToast }): more tabs on the settings screen, as { id, label, Screen }. For Pro.
+- filter `nhrrob_social_share_picture` (source, post): `featured` or `card`, the picture of a post that has a featured image (its shares and og:image). For an add-on.
+- filter `nhrrob_social_share_text` (text, post, network): a share's text on `linkedin`, `facebook` or `x`, before the layout adds the link. For an add-on.
+- filter `nhrrob_social_share_results` (results): the Results tables; an add-on appends to `networks` (optional `column`, `icon`). `Stats\Visits::rows()` takes its own keys for that. For an add-on.
+- action `nhrrob_social_share_shared` (post_id, network): after a LinkedIn share, and each time a share-by-hand link is used. For an add-on.
+- JS filter `nhrrob_social_share.screens` (screens, { ui, useToast }): more tabs on the settings screen, as { id, label, Screen }. For an add-on.
 - CSS custom property `--nhrrob-social-share-accent`: the colour of the "Copy link" button.
 
 ## Conventions
@@ -86,10 +92,27 @@ settings screen is a React app built with `@wordpress/scripts` only, light and
 dark, in the style of `.ai/DESIGN.md` there. PHPUnit with WP_Mock; PHPCS in
 CI. After a change to `admin/src` run `npm run lint:js` and `npm run build`
 and commit `admin/build`; after a new class run `composer dump-autoload
---no-dev` and commit `vendor/composer`. A release raises `Version` (header and
-`VERSION`) and `Stable tag`, and adds a `readme.txt` changelog section; a
-workflow tags `v<version>`, and the blog requires the plugin by that tag with
-Composer.
+--no-dev` and commit `vendor/composer`.
+
+## Releases
+
+Releases are made by hand, as in NHR Post Insights; nothing is tagged on a
+version change.
+
+1. On a branch: raise `Version` in the header and `VERSION`, `Stable tag` and
+   `package.json`'s `version`, and add a `= x.y.z =` section under
+   `== Changelog ==` in `readme.txt`. Merge it into `main`.
+2. On GitHub, create a release from `main` with a new tag `v<version>` and
+   that version's changelog as its notes. The tag push runs
+   `deploy-on-pushing-a-new-tag.yml`, which sends the version to WordPress.org
+   with the `SVN_USERNAME` and `SVN_PASSWORD` secrets. Until WordPress.org
+   approves the plugin and the secrets are set, that run fails; the tag and
+   release still work for the blog.
+3. To change only the readme or the listing's images, push to `trunk`. Bring
+   `trunk` up to `main` after each release.
+
+The blog requires the plugin by these tags with Composer, so a release
+reaches it in Dependabot's next pull request.
 
 ## Branches and pull requests
 

@@ -1,5 +1,6 @@
 # System files
 .ai/
+docs/
 CLAUDE.md
 .sass-cache
 .DS_Store
@@ -42,6 +43,7 @@ node_modules
 .editorconfig
 .eslintignore
 .eslintrc
+.eslintrc.js
 .git
 .github
 .gitattributes
