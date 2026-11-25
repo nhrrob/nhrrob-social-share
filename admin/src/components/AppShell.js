@@ -7,6 +7,12 @@ import { __ } from '@wordpress/i18n';
 import { Icon } from './ui';
 
 const THEME_KEY = 'nhrrob-social-share-theme';
+
+// A theme fixed for every NHR plugin by another plugin: 'light', 'dark' or
+// 'system'. Anything else is ignored, and the saved choice applies.
+const FORCED = [ 'light', 'dark', 'system' ].includes( window.nhrUi?.theme )
+	? window.nhrUi.theme
+	: '';
 const NAV_KEY = 'nhrrob-social-share-nav';
 
 function remember( key, value ) {
@@ -44,14 +50,19 @@ export default function AppShell( {
 	const prefersDark =
 		window.matchMedia &&
 		window.matchMedia( '(prefers-color-scheme: dark)' ).matches;
-	const isDark = theme ? theme === 'dark' : prefersDark;
+	let shown = theme;
+	if ( FORCED ) {
+		shown = FORCED === 'system' ? '' : FORCED;
+	}
+	const isDark = shown ? shown === 'dark' : prefersDark;
 
 	return (
 		<div
 			className={
-				'nhrrob-social-share-app' + ( collapsed ? ' is-collapsed' : '' )
+				'nhrrob-social-share-app nhr-app' +
+				( collapsed ? ' is-collapsed' : '' )
 			}
-			data-theme={ theme || undefined }
+			data-theme={ shown || undefined }
 		>
 			<header className="nhrrob-social-share-bar">
 				<button
@@ -79,28 +90,30 @@ export default function AppShell( {
 					{ title }
 				</span>
 				<span className="nhrrob-social-share-bar__spacer" />
-				<button
-					type="button"
-					className="nhrrob-social-share-bar__btn"
-					aria-label={
-						isDark
-							? __(
-									'Switch to light theme',
-									'nhrrob-social-share'
-							  )
-							: __(
-									'Switch to dark theme',
-									'nhrrob-social-share'
-							  )
-					}
-					onClick={ () => {
-						const next = isDark ? 'light' : 'dark';
-						remember( THEME_KEY, next );
-						setTheme( next );
-					} }
-				>
-					<Icon name={ isDark ? 'sun' : 'moon' } />
-				</button>
+				{ ! FORCED && (
+					<button
+						type="button"
+						className="nhrrob-social-share-bar__btn"
+						aria-label={
+							isDark
+								? __(
+										'Switch to light theme',
+										'nhrrob-social-share'
+								  )
+								: __(
+										'Switch to dark theme',
+										'nhrrob-social-share'
+								  )
+						}
+						onClick={ () => {
+							const next = isDark ? 'light' : 'dark';
+							remember( THEME_KEY, next );
+							setTheme( next );
+						} }
+					>
+						<Icon name={ isDark ? 'sun' : 'moon' } />
+					</button>
+				) }
 			</header>
 
 			<div className="nhrrob-social-share-body">

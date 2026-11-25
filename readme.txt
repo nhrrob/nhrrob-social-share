@@ -4,7 +4,7 @@ Tags: social share, linkedin, open graph, share buttons, privacy
 Requires at least: 6.6
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 0.3.0
+Stable tag: 0.3.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -69,6 +69,9 @@ Its settings, the LinkedIn connection and the share texts and history it kept wi
 6. The Posts list: a share link for each network under each post.
 
 == Changelog ==
+
+= 0.3.1 =
+* The settings screen can take a shared look (colours, corners, font) and a fixed light or dark theme from another NHR plugin, and keeps its own look when none is set. Developers: the `nhr_admin_parent_menu` filter moves the screen under another menu.
 
 = 0.3.0 =
 * Ready for WordPress.org: a shorter summary, screenshots, and answers on Results and on where the source is.
