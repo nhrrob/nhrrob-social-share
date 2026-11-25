@@ -45,7 +45,18 @@ class Admin {
 	 * @return void
 	 */
 	public function menu() {
-		$this->hook = add_options_page( __( 'Social Share', 'nhrrob-social-share' ), __( 'Social Share', 'nhrrob-social-share' ), 'manage_options', self::SLUG, [ $this, 'render' ] );
+		/**
+		 * Filters the menu this screen sits under: '' keeps it where it is, a
+		 * parent menu's slug moves it there (one menu for several plugins).
+		 *
+		 * @param string $parent Parent menu slug, or ''.
+		 */
+		// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- shared by every NHR plugin, so it can't carry this one's prefix.
+		$parent = (string) apply_filters( 'nhr_admin_parent_menu', '' );
+
+		$this->hook = '' === $parent
+			? add_options_page( __( 'Social Share', 'nhrrob-social-share' ), __( 'Social Share', 'nhrrob-social-share' ), 'manage_options', self::SLUG, [ $this, 'render' ] )
+			: add_submenu_page( $parent, __( 'Social Share', 'nhrrob-social-share' ), __( 'Social Share', 'nhrrob-social-share' ), 'manage_options', self::SLUG, [ $this, 'render' ] );
 	}
 
 	/**
