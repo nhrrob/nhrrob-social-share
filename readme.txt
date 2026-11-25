@@ -4,7 +4,7 @@ Tags: social share, linkedin, open graph, share buttons, privacy
 Requires at least: 6.6
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 0.3.1
+Stable tag: 0.4.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -22,7 +22,7 @@ NHR Social Share helps you share your posts and helps readers share them, withou
 - **Share by hand** where an API costs money or is not allowed: X, Facebook, Reddit and Medium open from the Posts list with the post filled in. What a page cannot take in its address (Facebook's text, Medium's link) is copied for you to paste. Used links say "again", and the post's "Shared on" box keeps where it was posted.
 - **Reddit targets**: default subreddits and your own profile (u/name) for every post, or a post's own list.
 - **Three layouts take turns** on LinkedIn, X and Facebook (link card; picture with the link in the text; picture with the link in the first comment or a reply), and **Results** shows which one brings readers back, with the visits counted by NHR Post Insights.
-- **A Social Share panel** in the post editor for the post's LinkedIn and Facebook text, its X text with a 280-character count, its Reddit targets and its LinkedIn layout.
+- **A Social Share panel** in the post editor for the post's LinkedIn text, its Facebook text (the LinkedIn text when empty), its X text with a 280-character count, its Reddit targets and its LinkedIn layout.
 
 Settings → Social Share has a screen for each, in a light and a dark theme.
 
@@ -70,8 +70,11 @@ Its settings, the LinkedIn connection and the share texts and history it kept wi
 
 == Changelog ==
 
-= 0.3.1 =
+= 0.4.1 =
 * The settings screen can take a shared look (colours, corners, font) and a fixed light or dark theme from another NHR plugin, and keeps its own look when none is set. Developers: the `nhr_admin_parent_menu` filter moves the screen under another menu.
+
+= 0.4.0 =
+* New: a Facebook text per post, in the editor's Social Share panel. "Share on Facebook" copies it, and copies the LinkedIn text as before when it is empty, so a post can go to Facebook in another language or tone. It goes through the `nhrrob_social_share_text` filter as `facebook`.
 
 = 0.3.0 =
 * Ready for WordPress.org: a shorter summary, screenshots, and answers on Results and on where the source is.
