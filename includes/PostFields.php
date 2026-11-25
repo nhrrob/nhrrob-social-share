@@ -114,6 +114,7 @@ class PostFields {
 					'linkedinText'   => Keys::LINKEDIN_TEXT,
 					'linkedinLayout' => Keys::LINKEDIN_LAYOUT,
 					'xText'          => Keys::X_TEXT,
+					'facebookText'   => Keys::FACEBOOK_TEXT,
 					'reddit'         => Keys::REDDIT,
 				],
 				'reddit'   => Options::get()['reddit'],

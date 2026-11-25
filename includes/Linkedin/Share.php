@@ -81,14 +81,16 @@ class Share {
 
 	/**
 	 * The share's text: the post's LinkedIn text, or its title and excerpt.
-	 * Facebook, shared by hand, uses the same text.
+	 * Facebook, shared by hand, uses its own text when the post has one, and
+	 * the same text otherwise.
 	 *
 	 * @param \WP_Post $post    Post.
 	 * @param string   $network `linkedin` or `facebook`.
 	 * @return string
 	 */
 	public static function text( $post, $network = 'linkedin' ) {
-		$text = get_post_meta( $post->ID, Keys::LINKEDIN_TEXT, true );
+		$text = 'facebook' === $network ? (string) get_post_meta( $post->ID, Keys::FACEBOOK_TEXT, true ) : '';
+		$text = '' === $text ? (string) get_post_meta( $post->ID, Keys::LINKEDIN_TEXT, true ) : $text;
 
 		if ( '' === $text ) {
 			$text = html_entity_decode( get_the_title( $post ), ENT_QUOTES, 'UTF-8' ) . "\n\n" . html_entity_decode( wp_strip_all_tags( get_the_excerpt( $post ) ), ENT_QUOTES, 'UTF-8' );

@@ -115,6 +115,21 @@ class LinksTest extends TestCase {
 		$this->assertSame( "A long text.\n\nLink in the first comment.", $this->links()['facebook']['copy'] );
 	}
 
+	public function test_facebook_text_of_its_own_is_copied_instead_of_the_linkedin_text() {
+		$this->meta[ Keys::LINKEDIN_TEXT ] = 'The LinkedIn text';
+		$this->meta[ Keys::FACEBOOK_TEXT ] = 'ফেসবুকের লেখা';
+
+		$this->layouts( 'a', 'b' );
+		$this->assertSame( "ফেসবুকের লেখা\n\nhttps://nazmulrobin.com/blog/a-post/", $this->links()['facebook']['copy'] );
+	}
+
+	public function test_facebook_text_does_not_change_the_linkedin_text() {
+		$this->meta[ Keys::LINKEDIN_TEXT ] = 'The LinkedIn text';
+		$this->meta[ Keys::FACEBOOK_TEXT ] = 'Facebook only';
+
+		$this->assertSame( 'The LinkedIn text', \NHRRob\SocialShare\Linkedin\Share::text( (object) [ 'ID' => 7 ] ) );
+	}
+
 	public function test_facebook_without_a_linkedin_text_uses_the_title_and_excerpt() {
 		$this->assertSame( "A post & more\n\nThe excerpt.", $this->links()['facebook']['copy'] );
 	}

@@ -114,7 +114,7 @@ class Links {
 	}
 
 	/**
-	 * Facebook: the LinkedIn text, copied on the click, since Facebook lets no
+	 * Facebook: the post's Facebook text, or the LinkedIn text, copied on the click, since Facebook lets no
 	 * link fill in a post's text. A: the share dialog, which shows the link as
 	 * a card. B: the link at the end of the text, and C a line pointing to the
 	 * first comment, both posted with the picture from Facebook's home page.
