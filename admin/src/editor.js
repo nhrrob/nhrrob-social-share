@@ -77,10 +77,7 @@ function Panel() {
 			>
 				<TextareaControl
 					__nextHasNoMarginBottom
-					label={ __(
-						'LinkedIn and Facebook text',
-						'nhrrob-social-share'
-					) }
+					label={ __( 'LinkedIn text', 'nhrrob-social-share' ) }
 					help={ __(
 						'Empty: the title and the excerpt. A link of its own is posted as written.',
 						'nhrrob-social-share'
@@ -88,6 +85,17 @@ function Panel() {
 					rows={ 6 }
 					value={ meta[ keys.linkedinText ] || '' }
 					onChange={ ( value ) => set( keys.linkedinText, value ) }
+				/>
+				<TextareaControl
+					__nextHasNoMarginBottom
+					label={ __( 'Facebook text', 'nhrrob-social-share' ) }
+					help={ __(
+						'Empty: the LinkedIn text. Write one for a different audience or language.',
+						'nhrrob-social-share'
+					) }
+					rows={ 4 }
+					value={ meta[ keys.facebookText ] || '' }
+					onChange={ ( value ) => set( keys.facebookText, value ) }
 				/>
 				<TextareaControl
 					__nextHasNoMarginBottom

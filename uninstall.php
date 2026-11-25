@@ -20,7 +20,7 @@ function nhrrob_social_share_uninstall_site() {
 		delete_option( $nhrrob_social_share_option );
 	}
 
-	foreach ( [ 'linkedin_text', 'linkedin_layout', 'x_text', 'reddit', 'linkedin', 'hand', 'hand_url', 'hand_layout' ] as $nhrrob_social_share_key ) {
+	foreach ( [ 'linkedin_text', 'linkedin_layout', 'x_text', 'facebook_text', 'reddit', 'linkedin', 'hand', 'hand_url', 'hand_layout' ] as $nhrrob_social_share_key ) {
 		delete_post_meta_by_key( '_nhrrob_social_share_' . $nhrrob_social_share_key );
 	}
 }

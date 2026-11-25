@@ -54,8 +54,8 @@ between. It grew out of the blog's own needs (nazmulrobin.com/blog, 1.10.0 to
   a **Shared on** box keeps where it was posted.
 - **Reddit targets** in the settings: default subreddits and/or the
   `u/name` profile every post gets, changeable per post.
-- **Per-post texts** in a box in the post editor: the LinkedIn text (also
-  used for Facebook), the X text (with a 280-character count), the Reddit
+- **Per-post texts** in a box in the post editor: the LinkedIn text, the
+  Facebook text (the LinkedIn text when empty, since 0.4.0), the X text (with a 280-character count), the Reddit
   targets. A site that writes posts from files (like the blog) fills the same
   post meta through a filter.
 - **Settings → Social Share**, a React app in the style of Robin's other

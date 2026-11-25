@@ -23,6 +23,7 @@ class Keys {
 	const LINKEDIN_TEXT   = '_nhrrob_social_share_linkedin_text';
 	const LINKEDIN_LAYOUT = '_nhrrob_social_share_linkedin_layout';
 	const X_TEXT          = '_nhrrob_social_share_x_text';
+	const FACEBOOK_TEXT   = '_nhrrob_social_share_facebook_text';
 	const REDDIT          = '_nhrrob_social_share_reddit';
 
 	/**
@@ -41,6 +42,7 @@ class Keys {
 		self::LINKEDIN_TEXT   => 'string',
 		self::LINKEDIN_LAYOUT => 'string',
 		self::X_TEXT          => 'string',
+		self::FACEBOOK_TEXT   => 'string',
 		self::REDDIT          => 'array',
 	];
 }
